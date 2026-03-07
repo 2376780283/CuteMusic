@@ -28,7 +28,7 @@ class FoldersRepository(
             val dataColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
 
             while (it.moveToNext()) {
-                val filePath = it.getString(dataColumn)
+                val filePath = it.getString(dataColumn) ?: ""
                 val folderPath = filePath.substringBeforeLast('/')
                 folderPaths.add(folderPath)
             }

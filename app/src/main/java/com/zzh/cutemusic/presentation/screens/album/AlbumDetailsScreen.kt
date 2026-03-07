@@ -23,7 +23,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ContainedLoadingIndicator
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -90,12 +90,12 @@ fun SharedTransitionScope.AlbumDetailsScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            ContainedLoadingIndicator()
+            CircularProgressIndicator()
         }
     } else {
 
         val sortedMusic = state.tracks.ordered(
-            sort = TrackSort.entries[trackSort],
+            sort = TrackSort.entries.getOrElse(trackSort) { TrackSort.TITLE },
             ascending = sortTracksAsc,
             query = ""
         ).sortedWith(

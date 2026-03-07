@@ -253,7 +253,7 @@ fun SharedTransitionScope.PlaylistsScreen(
             } else {
 
                 val orderedPlaylist = playlists.ordered(
-                    sort = PlaylistSort.entries[playlistSort],
+                    sort = PlaylistSort.entries.getOrElse(playlistSort) { PlaylistSort.NAME },
                     ascending = isSortedByASC,
                     query = textFieldState.text.toString()
                 )
@@ -263,7 +263,7 @@ fun SharedTransitionScope.PlaylistsScreen(
                 } else {
                     items(
                         items = orderedPlaylist,
-                        key = { it.id }
+                        key = { it.id.toString() + it.name }
                     ) { playlist ->
 
                         val isSelected by remember {

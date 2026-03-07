@@ -19,7 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.material3.ContainedLoadingIndicator
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -76,7 +76,7 @@ fun SharedTransitionScope.ArtistsScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            ContainedLoadingIndicator()
+            CircularProgressIndicator()
         }
     } else {
         Scaffold(
@@ -138,7 +138,7 @@ fun SharedTransitionScope.ArtistsScreen(
                 } else {
 
                     val orderedArtists = state.artists.ordered(
-                        sort = ArtistSort.entries[artistSort],
+                        sort = ArtistSort.entries.getOrElse(artistSort) { ArtistSort.NAME },
                         ascending = isSortedByASC,
                         query = textFieldState.text.toString()
                     )
@@ -148,7 +148,7 @@ fun SharedTransitionScope.ArtistsScreen(
                     } else {
                         items(
                             items = orderedArtists,
-                            key = { it.id }
+                            key = { it.id.toString() + it.name }
                         ) { artist ->
                             Column(
                                 modifier = Modifier

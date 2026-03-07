@@ -19,7 +19,7 @@ class UserPreferences(
 
     val getTrackSort = context.dataStore.data.map {
         val sort = it[TRACK_SORT] ?: 0
-        TrackSort.entries[sort]
+        TrackSort.entries.getOrElse(sort) { TrackSort.TITLE }
     }
 
     val getSortTracksAscending = context.dataStore.data.map {
@@ -28,7 +28,7 @@ class UserPreferences(
 
     val getPlaylistSort = context.dataStore.data.map {
         val sort = it[PLAYLIST_SORT] ?: 0
-        PlaylistSort.entries[sort]
+        PlaylistSort.entries.getOrElse(sort) { PlaylistSort.NAME }
     }
 
     suspend fun getSavedMusicState() = context.dataStore.data.map {

@@ -144,7 +144,7 @@ class PlaylistViewModel(
         )?.use { cursor ->
             if (cursor.moveToFirst()) {
                 val pathColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
-                val path = cursor.getString(pathColumn)
+                val path = cursor.getString(pathColumn) ?: ""
                 return path
             }
         }

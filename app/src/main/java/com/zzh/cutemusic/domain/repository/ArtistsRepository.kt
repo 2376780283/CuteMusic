@@ -47,7 +47,7 @@ class ArtistsRepository(
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
-                val artist = cursor.getString(artistColumn)
+                val artist = cursor.getString(artistColumn) ?: ""
                 val numberTracks = cursor.getInt(numberTracksColumn)
                 val numberAlbums = cursor.getInt(numberAlbumsColumn)
 
@@ -87,7 +87,7 @@ class ArtistsRepository(
                 cursor.getColumnIndexOrThrow(MediaStore.Audio.Artists.NUMBER_OF_TRACKS)
             while (cursor.moveToFirst()) {
                 val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
+                val name = cursor.getString(nameColumn) ?: ""
                 val nbAlbums = cursor.getInt(nbAlbumsColumn)
                 val nbTracks = cursor.getInt(nbTracksColumn)
 
@@ -145,8 +145,8 @@ class ArtistsRepository(
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
-                val album = cursor.getString(albumColumn)
-                val artist = cursor.getString(artistColumn)
+                val album = cursor.getString(albumColumn) ?: ""
+                val artist = cursor.getString(artistColumn) ?: ""
                 val albumInfo = Album(id, album, artist)
                 albums.add(albumInfo)
             }

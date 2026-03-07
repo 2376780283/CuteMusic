@@ -41,8 +41,8 @@ class AlbumsRepository(
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
-                val album = cursor.getString(albumColumn)
-                val artist = cursor.getString(artistColumn)
+                val album = cursor.getString(albumColumn) ?: ""
+                val artist = cursor.getString(artistColumn) ?: ""
                 val albumInfo = Album(id, album, artist)
                 albums.add(albumInfo)
             }
@@ -69,8 +69,8 @@ class AlbumsRepository(
 
             while (cursor.moveToFirst()) {
                 val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
-                val artist = cursor.getString(artistColumn)
+                val name = cursor.getString(nameColumn) ?: ""
+                val artist = cursor.getString(artistColumn) ?: ""
 
                 return Album(
                     id = id,

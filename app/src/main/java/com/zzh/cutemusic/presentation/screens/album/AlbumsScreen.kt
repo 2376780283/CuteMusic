@@ -13,7 +13,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.material3.ContainedLoadingIndicator
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
@@ -62,7 +62,7 @@ fun SharedTransitionScope.AlbumsScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            ContainedLoadingIndicator()
+            CircularProgressIndicator()
         }
     } else {
         Scaffold(
@@ -118,12 +118,12 @@ fun SharedTransitionScope.AlbumsScreen(
             }
         ) { paddingValues ->
             val orderedAlbums = state.albums.ordered(
-                sort = AlbumSort.entries[albumSort],
+                sort = AlbumSort.entries.getOrElse(albumSort) { AlbumSort.NAME },
                 ascending = isSortedByASC,
                 query = textFieldState.text.toString()
             )
             LazyVerticalGrid(
-                columns = GridCells.Fixed(if (orderedAlbums.isEmpty() || state.albums.isEmpty()) 1 else numberOfAlbumGrids),
+                columns = GridCells.Fixed(if (orderedAlbums.isEmpty() || state.albums.isEmpty()) 1 else maxOf(1, numberOfAlbumGrids)),
                 contentPadding = paddingValues,
                 state = lazyState
             ) {
@@ -132,7 +132,7 @@ fun SharedTransitionScope.AlbumsScreen(
                         NoXFound(
                             headlineText = R.string.no_albums_found,
                             bodyText = R.string.no_album_desc,
-                            icon = androidx.media3.session.R.drawable.media3_icon_album
+                            icon = R.drawable.album_filled
                         )
                     }
                 } else {
@@ -141,7 +141,7 @@ fun SharedTransitionScope.AlbumsScreen(
                     } else {
                         items(
                             items = orderedAlbums,
-                            key = { it.id }
+                            key = { it.id.toString() + it.name }
                         ) { album ->
                             AlbumCard(
                                 modifier = Modifier.animateItem(),

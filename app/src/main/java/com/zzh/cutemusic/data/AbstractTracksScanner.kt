@@ -109,12 +109,12 @@ class AbstractTracksScanner(
 
 
                 val id = cursor.getLong(idColumn)
-                val title = cursor.getString(titleColumn)
-                val artist = cursor.getString(artistColumn)
+                val title = cursor.getString(titleColumn) ?: ""
+                val artist = cursor.getString(artistColumn) ?: ""
                 val artistId = cursor.getLong(artistIdColumn)
-                val album = cursor.getString(albumColumn)
+                val album = cursor.getString(albumColumn) ?: ""
                 val albumId = cursor.getLong(albumIdColumn)
-                val filePath = cursor.getString(folderColumn)
+                val filePath = cursor.getString(folderColumn) ?: ""
                 val folder = filePath.substringBeforeLast('/')
                 val size = cursor.getLong(sizeColumn)
                 val duration = cursor.getLong(durationColumn)
