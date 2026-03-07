@@ -1,70 +1,90 @@
-<h1>🚀 Getting Started</h1>
+# 🚀 快速开始
 
+## 代码指南
 
-### Code Guidelines
+CuteApps 目前没有很多严格的规范，但最好遵循现有的一些基本原则，例如：
 
-CuteApps currently don't have alot of guidelines, but it is best if you follow the few ones they have such as :
+-   **简洁无杂乱的体验**：这一点很好理解，避免添加不必要的元素。两个示例：
 
-- Clutter-free experience : This is self explanatory, avoid adding elements if un-needed, two example could be :
-    - flashing music icon : The music icon in the searchbar flashes red, indicating that it is clickable / has an action related to it
-    - the restart button, the seek to previous automatically becomes one 10 seconds in the song instead being a whole new button which brings us to the next guideline :
- - Make things clear : If you are adding a feature, make sure it is clear of what it does, clear text/description, accurate icon
- - Landscape : CuteApps <b>MUST</b> be fully compatible with landscape mode, if a portrait design doesn't adapt well to landscape, you will have to make a separate landscape one
- - Creativity : This isn't mandatory, but if you are designing a screen or something else, be creative ! Try things no other apps has before, be unique ! Remember, failure is just a step closer to perfection !
+    -   **闪烁的音乐图标**：搜索栏中的音乐图标会闪烁红色，表示它是可点击的
+        / 与某个操作相关
+    -   **重启按钮**：在歌曲播放到 10
+        秒后，"返回上一首"按钮会自动变成"回退 10
+        秒"，而不是新增一个完全不同的按钮。这也引出了下一条原则：
 
-### Prerequisites
+-   **让功能清晰易懂**：如果你添加一个功能，请确保用户能清楚理解它的作用，例如：清晰的文本说明、准确的图标。
 
-- Android Studio (latest version recommended)
-- Java Development Kit (JDK) 11 or higher
-- Git
+-   **横屏模式**：CuteApps **必须**
+    完全兼容横屏模式。如果某个竖屏设计无法很好适配横屏，你需要专门设计一个横屏布局。
 
-### Installation
+-   **创意**：这不是强制要求，但如果你在设计界面或其他内容，请尽量发挥创意！尝试做一些其他应用没有做过的设计，让应用保持独特。记住：失败只是离完美更近的一步。
 
-1. **Clone the repository:**
-   ```sh
-   git clone https://github.com/sosauce/CuteMusic.git
-   cd CuteMusic
-   ```
+## 前置要求
 
-2. **Open the project in Android Studio:**
-   - Open Android Studio.
-   - Select `Open an existing project`.
-   - Navigate to the `CuteMusic` directory and select it.
+-   Android Studio（建议使用最新版本）
+-   Java Development Kit (JDK) 11 或更高版本
+-   Git
 
-3. **Build the project:**
-   - Click on `Build` in the top menu.
-   - Select `Make Project` and ensure there are no errors.
+## 安装步骤
 
-4. **Run the app:**
-   - Connect an Android device or use an emulator.
-   - Click on `Run` in the top menu.
-   - Select your device and click `OK`.
+1.  **克隆仓库：**
 
-### Contributing
+``` bash
+git clone https://github.com/sosauce/CuteMusic.git
+cd CuteMusic
+```
 
-1. **Fork the repository:**
-   - Click the `Fork` button on the top right of the repository page.
+2.  **在 Android Studio 中打开项目：**
 
-2. **Create a new branch:**
-   ```sh
-   git checkout -b feature/YourFeatureName
-   ```
+-   打开 Android Studio
+-   选择 `Open an existing project`
+-   找到 `CuteMusic` 目录并选择它
 
-3. **Make your changes:**
-   - Implement your feature or bug fix.
-   - Ensure your code follows the project's coding standards.
-4. **Commit your changes:**
-   ```sh
-   git add .
-   git commit -m "Add feature: YourFeatureName"
-   ```
-5. **Push to your fork:**
-   ```sh
-   git push origin feature/YourFeatureName
-   ```
-6. **Create a Pull Request:**
-   - Go to the original repository.
-   - Click on `Pull Requests` and then `New Pull Request`.
-   - Select your branch and submit the pull request.
+3.  **构建项目：**
 
-Thank you to anyone taking their time to contribute and improve the app :heart:!!!
+-   在顶部菜单点击 `Build`
+-   选择 `Make Project` 并确保没有报错
+
+4.  **运行应用：**
+
+-   连接 Android 设备或使用模拟器
+-   在顶部菜单点击 `Run`
+-   选择你的设备并点击 `OK`
+
+## 贡献代码
+
+1.  **Fork 仓库：**
+
+-   在仓库页面右上角点击 `Fork`
+
+2.  **创建新分支：**
+
+``` bash
+git checkout -b feature/YourFeatureName
+```
+
+3.  **进行修改：**
+
+-   实现你的功能或修复 bug
+-   确保代码符合项目的编码规范
+
+4.  **提交更改：**
+
+``` bash
+git add .
+git commit -m "Add feature: YourFeatureName"
+```
+
+5.  **推送到你的 Fork：**
+
+``` bash
+git push origin feature/YourFeatureName
+```
+
+6.  **创建 Pull Request：**
+
+-   前往原始仓库
+-   点击 `Pull Requests` → `New Pull Request`
+-   选择你的分支并提交 Pull Request
+
+感谢所有愿意花时间为应用做出贡献并改进它的人 ❤️！！！

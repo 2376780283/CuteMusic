@@ -1,92 +1,127 @@
-<p align=center><image src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" /></p>
-<h1 align="center">CuteMusic</h1>
-<p align="center">CuteMusic is a cute and powerful offline music player for Android!</p>
-
- <p align="center">
-   <img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9"/>
-   <img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9"/>
-   <image src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin"/>
- </p> 
- <p align="center">
-   <a href="https://github.com/sosauce/CuteMusic/blob/main/README_ES.MD">
-     <img src="https://img.shields.io/badge/Disponible_en-español-blue?style=for-the-badge" alt="Disponible en español"/>
-   </a>
+```{=html}
+<p align="center">
+```
+`<image src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />`{=html}
+```{=html}
 </p>
- <p align="center">
- <a href="https://github.com/sosauce/CuteMusic/releases">
-   <image src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80"/>
- </a>
-  <a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">
-   <image src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80"/>
- </a>
-
-   <a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">
-   <image src="https://f-droid.org/badge/get-it-on.png" height="80"/>
- </a>
-<p align="center">I recommend installing from GitHub, as it guarantees access to the latest update.</p>
+```
+```{=html}
+<h1 align="center">
+```
+CuteMusic
+```{=html}
+</h1>
+```
+```{=html}
+<p align="center">
+```
+CuteMusic 是一款可爱且功能强大的 Android 离线音乐播放器！
+```{=html}
 </p>
-
-
-
-<p align=center>
- <img height="512" alt="1" src="https://github.com/user-attachments/assets/82108efb-4030-4603-adac-a53bcc21fee3" />
- <img height="512" alt="2" src="https://github.com/user-attachments/assets/1a713055-84a3-48e8-b9b4-03b692429da1" />
- <img height="512" alt="3" src="https://github.com/user-attachments/assets/f5be5d07-d588-4304-ad1b-ce6552a1be53" />
- <img height="512" alt="5" src="https://github.com/user-attachments/assets/96009e6e-af5e-4d15-8d6a-15cc83274d1a" />
- <img height="512" alt="4" src="https://github.com/user-attachments/assets/40750ad9-7f18-4213-9c33-6a74d8f4a20e" />
-
+```
+```{=html}
+<p align="center">
+```
+`<img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9"/>`{=html}
+`<img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9"/>`{=html}
+`<image src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin"/>`{=html}
+```{=html}
 </p>
-  
-<h1>👀 Overview</h1>
+```
+```{=html}
+<p align="center">
+```
+`<a href="https://github.com/sosauce/CuteMusic/blob/main/README_ES.MD">`{=html}
+`<img src="https://img.shields.io/badge/Disponible_en-español-blue?style=for-the-badge" alt="Disponible en español"/>`{=html}
+`</a>`{=html}
+```{=html}
+</p>
+```
+```{=html}
+<p align="center">
+```
+`<a href="https://github.com/sosauce/CuteMusic/releases">`{=html}
+`<image src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80"/>`{=html}
+`</a>`{=html}
 
-- Play any song from anywhere just by sharing the audio file to the app without downloading it!
-- Easy search across all your music/albums/artists!
-- Very fast and snappy!
-- No unnecessary permissions needed!
-- Material 3 Expressive design!
-- Blacklist Folders!
-- Beautiful landscape UI!
-- Tag Editor!
-- Playlists support!
-- Load and persist songs from anywhere using Android's S.A.F!
-- Part of the CuteApps ecosystem!
-- Makes you a cutie!
-   
----
-<h1>💬 Contact Me</h1>
+`<a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">`{=html}
+`<image src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80"/>`{=html}
+`</a>`{=html}
 
-[Discord server](https://discord.gg/c6aCu4yjbu)
-</br>
-[Email](mailto:sosauce_dev@protonmail.com)
+`<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">`{=html}
+`<image src="https://f-droid.org/badge/get-it-on.png" height="80"/>`{=html}
+`</a>`{=html}
 
----
-<h1>❤️ Support</h1>
+```{=html}
+<p align="center">
+```
+推荐从 GitHub 安装，这样可以确保获得最新版本更新。
+```{=html}
+</p>
+```
+```{=html}
+</p>
+```
 
-If you wish to support me, you can see how to do so on my [website](https://sosauce.github.io/support/)
+------------------------------------------------------------------------
 
----
-<h1>⚠️ Copyright</h1>
+# 👀 项目概览
 
-<p>Copyright (c)2025 sosauce
+-   只需将音频文件分享给应用，即可直接播放任意歌曲，无需下载！
+-   可以在所有音乐 / 专辑 / 艺术家之间进行快速搜索！
+-   运行速度非常快、响应灵敏！
+-   不需要任何多余权限！
+-   Material 3 Expressive 设计！
+-   支持文件夹黑名单！
+-   精美的横屏界面！
+-   标签（Tag）编辑器！
+-   支持播放列表！
+-   通过 Android S.A.F 从任意位置加载并持久保存歌曲！
+-   CuteApps 生态系统的一部分！
+-   让你变得更可爱！
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+------------------------------------------------------------------------
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+# 💬 联系作者
 
-The above copyright notice, this permission notice, and its license shall be included in all copies or substantial portions of the Software.
+Discord 服务器：\
+https://discord.gg/c6aCu4yjbu
 
-You can find a copy of the GNU General Public License v3 [here](https://www.gnu.org/licenses/)</p>
+邮箱：\
+sosauce_dev@protonmail.com
 
+------------------------------------------------------------------------
 
----
-To get started with contributing, please check the [get started readme](https://github.com/sosauce/CuteMusic/blob/main/GET_STARTED.md)
+# ❤️ 支持
 
----
+如果你想支持作者，可以在作者网站查看支持方式：\
+https://sosauce.github.io/support/
 
-#### You can find the SHA-256 [here](https://sosauce.github.io/projects/)
+------------------------------------------------------------------------
+
+# ⚠️ 版权
+
+Copyright (c) 2025 sosauce
+
+本程序是自由软件：你可以在 **GNU 通用公共许可证（GPL）**
+的条款下重新分发或修改它， 该许可证由自由软件基金会发布，可以使用 **GPL
+第 3 版**，或（根据你的选择）任何更新版本。
+
+本程序的发布是希望它能发挥作用， 但 **不提供任何担保**，甚至不包括对
+**适销性** 或 **特定用途适用性** 的隐含担保。 详情请参阅 GNU
+通用公共许可证。
+
+上述版权声明、本许可声明以及许可证内容必须包含在软件的所有副本或重要部分中。
+
+GNU GPL v3 许可证可以在这里查看：\
+https://www.gnu.org/licenses/
+
+------------------------------------------------------------------------
+
+如果你想参与贡献，请查看：\
+https://github.com/sosauce/CuteMusic/blob/main/GET_STARTED.md
+
+------------------------------------------------------------------------
+
+应用文件的 SHA‑256 可以在这里查看：\
+https://sosauce.github.io/projects/
