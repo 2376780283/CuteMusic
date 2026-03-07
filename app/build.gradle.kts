@@ -2,13 +2,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlin)
+    // alias(libs.plugins.kotlin)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
 }
-
-
 
 android {
     namespace = "com.sosauce.cutemusic"
@@ -32,6 +30,7 @@ android {
         }
     }
 
+/*   
     applicationVariants.all {
         val variant = this
         variant.outputs
@@ -40,8 +39,7 @@ android {
                 output.outputFileName = "CM_${variant.versionName}.apk"
             }
     }
-
-
+*/
 
     signingConfigs {
         create("release") {
@@ -97,17 +95,6 @@ android {
             includeInApk = false
             includeInBundle = false
         }
-
-
-//        splits {
-//            abi {
-//                isEnable = true
-//                reset()
-//                include("armeabi-v7a", "arm64-v8a")
-//                isUniversalApk = true
-//            }
-//        }
-
 
     }
 
