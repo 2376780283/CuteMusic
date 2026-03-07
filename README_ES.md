@@ -1,37 +1,37 @@
-```{=html}
+
 <p align="center">
-```
+
 `<img src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />`{=html}
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <h1 align="center">
-```
+
 CuteMusic
-```{=html}
+
 </h1>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 CuteMusic 是一款简单、轻量且开源的 Android 离线音乐播放器，基于 Jetpack
 Compose 和 Media3 开发。
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 `<img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9" />`{=html}
 `<img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9" />`{=html}
 `<img src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin" />`{=html}
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 `<a href="https://github.com/sosauce/CuteMusic/releases">`{=html}
 `<img src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80" />`{=html}
 `</a>`{=html}
@@ -41,25 +41,25 @@ Compose 和 Media3 开发。
 `<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">`{=html}
 `<img src="https://f-droid.org/badge/get-it-on.png" height="80" />`{=html}
 `</a>`{=html}
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 推荐从 GitHub 安装，因为这样可以确保获得最新更新。
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 `<img src="https://i.postimg.cc/tJS44wR7/1.png" height="512" />`{=html}
 `<img src="https://i.postimg.cc/wxZK99gL/2.png" height="512" />`{=html}
 `<img src="https://i.postimg.cc/4NvTPrRc/3.png" height="512" />`{=html}
-```{=html}
+
 </p>
-```
+
 # 👀 项目概览
 
 -   只需把音频文件分享给应用，就可以从任何位置播放歌曲，无需下载！

@@ -1,45 +1,45 @@
-```{=html}
+
 <p align="center">
-```
+
 `<image src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />`{=html}
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <h1 align="center">
-```
+
 CuteMusic
-```{=html}
+
 </h1>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 CuteMusic 是一款可爱且功能强大的 Android 离线音乐播放器！
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 `<img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9"/>`{=html}
 `<img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9"/>`{=html}
 `<image src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin"/>`{=html}
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 `<a href="https://github.com/sosauce/CuteMusic/blob/main/README_ES.MD">`{=html}
 `<img src="https://img.shields.io/badge/Disponible_en-español-blue?style=for-the-badge" alt="Disponible en español"/>`{=html}
 `</a>`{=html}
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 <p align="center">
-```
+
 `<a href="https://github.com/sosauce/CuteMusic/releases">`{=html}
 `<image src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80"/>`{=html}
 `</a>`{=html}
@@ -52,16 +52,16 @@ CuteMusic 是一款可爱且功能强大的 Android 离线音乐播放器！
 `<image src="https://f-droid.org/badge/get-it-on.png" height="80"/>`{=html}
 `</a>`{=html}
 
-```{=html}
+
 <p align="center">
-```
+
 推荐从 GitHub 安装，这样可以确保获得最新版本更新。
-```{=html}
+
 </p>
-```
-```{=html}
+
+
 </p>
-```
+
 
 ------------------------------------------------------------------------
 
