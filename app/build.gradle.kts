@@ -50,9 +50,12 @@ android {
 
             if (keystoreFile.exists()) {
                 storeFile = keystoreFile
-                storePassword = System.getenv("SIGNING_STORE_PASSWORD")
-                keyAlias = System.getenv("SIGNING_KEY_ALIAS")
-                keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+                // storePassword = System.getenv("SIGNING_STORE_PASSWORD")
+                // keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+                // keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+                storePassword = "114514.b"             
+                keyAlias = "zzhlife"                  
+                keyPassword = "114514.b"    
             } else {
                 println("No keystore found, APK will be unsigned")
             }
