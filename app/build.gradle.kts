@@ -18,17 +18,17 @@ android {
 
 
         applicationId = "com.sosauce.cutemusic"
-        minSdk = 26
+        minSdk = 29
         targetSdk = 36
-        versionCode = 40005
-        versionName = "3.1.6"
+        versionCode = 20260307
+        versionName = "3.1.7"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
         ndk {
             //noinspection ChromeOsAbiSupport
-            abiFilters += arrayOf("arm64-v8a", "armeabi-v7a")
+            abiFilters += arrayOf("arm64-v8a")
         }
     }
 
