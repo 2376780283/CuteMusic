@@ -1,7 +1,7 @@
 
 <p align="center">
 
-`<img src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />`{=html}
+<img src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />
 
 </p>
 
@@ -23,24 +23,24 @@ Compose 和 Media3 开发。
 
 <p align="center">
 
-`<img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9" />`{=html}
-`<img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9" />`{=html}
-`<img src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin" />`{=html}
+<img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9" />
+<img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9" />
+<img src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin" />
 
 </p>
 
 
 <p align="center">
 
-`<a href="https://github.com/sosauce/CuteMusic/releases">`{=html}
-`<img src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80" />`{=html}
-`</a>`{=html}
-`<a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">`{=html}
-`<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" />`{=html}
-`</a>`{=html}
-`<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">`{=html}
-`<img src="https://f-droid.org/badge/get-it-on.png" height="80" />`{=html}
-`</a>`{=html}
+<a href="https://github.com/sosauce/CuteMusic/releases">
+<img src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80" />
+</a>
+<a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">
+<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" />
+</a>
+<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">
+<img src="https://f-droid.org/badge/get-it-on.png" height="80" />
+</a>
 
 </p>
 
@@ -54,9 +54,9 @@ Compose 和 Media3 开发。
 
 <p align="center">
 
-`<img src="https://i.postimg.cc/tJS44wR7/1.png" height="512" />`{=html}
-`<img src="https://i.postimg.cc/wxZK99gL/2.png" height="512" />`{=html}
-`<img src="https://i.postimg.cc/4NvTPrRc/3.png" height="512" />`{=html}
+<img src="https://i.postimg.cc/tJS44wR7/1.png" height="512" />
+<img src="https://i.postimg.cc/wxZK99gL/2.png" height="512" />
+<img src="https://i.postimg.cc/4NvTPrRc/3.png" height="512" />
 
 </p>
 

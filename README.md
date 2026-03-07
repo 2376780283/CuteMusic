@@ -1,7 +1,7 @@
 
 <p align="center">
 
-`<image src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />`{=html}
+<image src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />
 
 </p>
 
@@ -22,35 +22,35 @@ CuteMusic 是一款可爱且功能强大的 Android 离线音乐播放器！
 
 <p align="center">
 
-`<img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9"/>`{=html}
-`<img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9"/>`{=html}
-`<image src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin"/>`{=html}
+<img src="https://img.shields.io/github/downloads/sosauce/CuteMusic/total?style=for-the-badge&logo=github&color=f9b3a9"/>
+<img src="https://img.shields.io/github/v/release/sosauce/CuteMusic?style=for-the-badge&logo=github&color=%23F9B3A9"/>
+<image src="https://img.shields.io/badge/Kotlin-100%25-%23F9B3A9?style=for-the-badge&logo=Kotlin"/>
 
 </p>
 
 
 <p align="center">
 
-`<a href="https://github.com/sosauce/CuteMusic/blob/main/README_ES.MD">`{=html}
-`<img src="https://img.shields.io/badge/Disponible_en-español-blue?style=for-the-badge" alt="Disponible en español"/>`{=html}
-`</a>`{=html}
+<a href="https://github.com/sosauce/CuteMusic/blob/main/README_ES.MD">
+<img src="https://img.shields.io/badge/Disponible_en-español-blue?style=for-the-badge" alt="Disponible en español"/>
+</a>
 
 </p>
 
 
 <p align="center">
 
-`<a href="https://github.com/sosauce/CuteMusic/releases">`{=html}
-`<image src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80"/>`{=html}
-`</a>`{=html}
+<a href="https://github.com/sosauce/CuteMusic/releases">
+<image src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80"/>
+</a>
 
-`<a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">`{=html}
-`<image src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80"/>`{=html}
-`</a>`{=html}
+<a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">
+<image src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80"/>
+</a>
 
-`<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">`{=html}
-`<image src="https://f-droid.org/badge/get-it-on.png" height="80"/>`{=html}
-`</a>`{=html}
+<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">
+<image src="https://f-droid.org/badge/get-it-on.png" height="80"/>
+</a>
 
 
 <p align="center">
