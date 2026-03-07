@@ -8,9 +8,12 @@ package com.sosauce.cutemusic.presentation.screens.playing
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -83,7 +86,7 @@ fun SharedTransitionScope.NowPlayingLandscape(
                 onChangeSnap = { snap = !snap }
             )
         }
-
+       
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -91,19 +94,24 @@ fun SharedTransitionScope.NowPlayingLandscape(
                 .padding(horizontal = 15.dp)
                 .fillMaxSize()
         ) {
-            Column {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight(),
+                contentAlignment = Alignment.Center
+            ) {
                 Artwork(
-                    pagerModifier = Modifier
-                        .fillMaxWidth(0.4f),
                     musicState = musicState,
                     onHandlePlayerActions = onHandlePlayerActions
                 )
             }
-            Spacer(modifier = Modifier.width(10.dp))
+
+            Spacer(modifier = Modifier.width(20.dp))
 
             Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .weight(1f)
+                    .fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PlayingTopRow(
@@ -111,32 +119,44 @@ fun SharedTransitionScope.NowPlayingLandscape(
                     onNavigate = onNavigate,
                     onShrinkToSearchbar = onShrinkToSearchbar
                 )
-                TitleAndArtist(
-                    titleModifier = Modifier
-                        .sharedBounds(
-                            sharedContentState = rememberSharedContentState(key = SharedTransitionKeys.CURRENTLY_PLAYING),
-                            animatedVisibilityScope = LocalNavAnimatedContentScope.current
-                        ),
-                    musicState = musicState
-                )
-                Spacer(Modifier.height(24.dp))
-                CuteSlider(
-                    musicState = musicState,
-                    onHandlePlayerActions = onHandlePlayerActions
-                )
-                ActionButtonsRow(
-                    musicState = musicState,
-                    onHandlePlayerActions = onHandlePlayerActions
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                QuickActionsRow(
-                    musicState = musicState,
-                    onShowSpeedCard = { showSpeedCard = true },
-                    onHandlePlayerActions = onHandlePlayerActions,
-                    onNavigate = onNavigate
-                )
-            }
 
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    TitleAndArtist(
+                        titleModifier = Modifier
+                            .sharedBounds(
+                                sharedContentState = rememberSharedContentState(key = SharedTransitionKeys.CURRENTLY_PLAYING),
+                                animatedVisibilityScope = LocalNavAnimatedContentScope.current
+                            ),
+                        musicState = musicState
+                    )
+                }
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    CuteSlider(
+                        musicState = musicState,
+                        onHandlePlayerActions = onHandlePlayerActions
+                    )
+                    ActionButtonsRow(
+                        musicState = musicState,
+                        onHandlePlayerActions = onHandlePlayerActions
+                    )
+                    QuickActionsRow(
+                        musicState = musicState,
+                        onShowSpeedCard = { showSpeedCard = true },
+                        onHandlePlayerActions = onHandlePlayerActions,
+                        onNavigate = onNavigate
+                    )
+                }
+            }
         }
     }
 }

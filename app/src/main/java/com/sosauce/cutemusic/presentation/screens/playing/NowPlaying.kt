@@ -30,6 +30,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -167,32 +172,47 @@ private fun SharedTransitionScope.NowPlayingContent(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(horizontal = 15.dp)
-                .verticalScroll(rememberScrollState()), // for smaller screens where it might not entirely fit
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Artwork(
-                musicState = musicState,
-                onHandlePlayerActions = onHandlePlayerActions
-            )
-            TitleAndArtist(
-                titleModifier = Modifier
-                    .sharedBounds(
-                        sharedContentState = rememberSharedContentState(key = SharedTransitionKeys.CURRENTLY_PLAYING),
-                        animatedVisibilityScope = LocalNavAnimatedContentScope.current
-                    ),
-                musicState = musicState
-            )
-            CuteSlider(
-                musicState = musicState,
-                onHandlePlayerActions = onHandlePlayerActions
-            )
-            ActionButtonsRow(
-                musicState = musicState,
-                onHandlePlayerActions = onHandlePlayerActions
-            )
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Artwork(
+                    musicState = musicState,
+                    onHandlePlayerActions = onHandlePlayerActions
+                )
+            }
+            
+            // 下方控制区域
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp), // 距离底部 BottomAppBar 的间距
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                TitleAndArtist(
+                    titleModifier = Modifier
+                        .sharedBounds(
+                            sharedContentState = rememberSharedContentState(key = SharedTransitionKeys.CURRENTLY_PLAYING),
+                            animatedVisibilityScope = LocalNavAnimatedContentScope.current
+                        ),
+                    musicState = musicState
+                )
+                CuteSlider(
+                    musicState = musicState,
+                    onHandlePlayerActions = onHandlePlayerActions
+                )
+                ActionButtonsRow(
+                    musicState = musicState,
+                    onHandlePlayerActions = onHandlePlayerActions
+                )
+            }
         }
     }
-
-
 }
