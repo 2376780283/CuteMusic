@@ -1,7 +1,7 @@
 
 <p align="center">
 
-<image src="https://i.ibb.co/SdMsJs7/cute-music-icon.png" height="200" />
+<image src="https://github.com/2376780283/CuteMusic/blob/main/App-arts/1024.png" height="200" />
 
 </p>
 
