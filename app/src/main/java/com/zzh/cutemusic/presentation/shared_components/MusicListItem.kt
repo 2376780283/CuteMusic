@@ -241,7 +241,7 @@ private fun DefaultMusicListItemTrailingContent(
 }
 
 @Composable
-private fun TrackDropdownMenu(
+fun TrackDropdownMenu(
     track: CuteTrack,
     musicState: MusicState,
     isExpanded: Boolean,

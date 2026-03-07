@@ -20,6 +20,7 @@ import com.zzh.cutemusic.data.datastore.PreferencesKeys.HAS_SEEN_TIP
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.HIDDEN_FOLDERS
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.MIN_TRACK_DURATION
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.NUMBER_OF_ALBUM_GRIDS
+import com.zzh.cutemusic.data.datastore.PreferencesKeys.NUMBER_OF_TRACK_GRIDS
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.PAUSE_ON_MUTE
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.PLAYLIST_SORT
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.SAF_TRACKS
@@ -57,6 +58,7 @@ data object PreferencesKeys {
     val CAROUSEL = booleanPreferencesKey("CAROUSEL")
     val MEDIA_INDEX_TO_MEDIA_ID = stringPreferencesKey("MEDIA_INDEX_TO_MEDIA_ID")
     val NUMBER_OF_ALBUM_GRIDS = intPreferencesKey("NUMBER_OF_ALBUM_GRIDS")
+    val NUMBER_OF_TRACK_GRIDS = intPreferencesKey("NUMBER_OF_TRACK_GRIDS")
     val SLIDER_STYLE = stringPreferencesKey("SLIDER_STYLE")
     val THUMBLESS_SLIDER = booleanPreferencesKey("THUMBLESS_SLIDER")
     val HIDDEN_FOLDERS = stringSetPreferencesKey("HIDDEN_FOLDERS")
@@ -110,6 +112,10 @@ fun rememberCarousel() =
 @Composable
 fun rememberAlbumGrids() =
     rememberPreference(key = NUMBER_OF_ALBUM_GRIDS, defaultValue = 2)
+    
+@Composable
+fun rememberTrackGrids() =
+    rememberPreference(key = NUMBER_OF_TRACK_GRIDS, defaultValue = 2)
 
 @Composable
 fun rememberArtworkShape() =

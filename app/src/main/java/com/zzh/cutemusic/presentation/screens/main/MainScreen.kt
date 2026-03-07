@@ -17,11 +17,14 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
@@ -55,6 +58,7 @@ import com.zzh.cutemusic.R
 import com.zzh.cutemusic.data.datastore.rememberGroupByFolders
 import com.zzh.cutemusic.data.datastore.rememberHiddenFolders
 import com.zzh.cutemusic.data.datastore.rememberSortTracksAscending
+import com.zzh.cutemusic.data.datastore.rememberTrackGrids
 import com.zzh.cutemusic.data.datastore.rememberTrackSort
 import com.zzh.cutemusic.data.models.CuteTrack
 import com.zzh.cutemusic.data.states.MusicState
@@ -62,10 +66,10 @@ import com.zzh.cutemusic.domain.actions.PlayerActions
 import com.zzh.cutemusic.presentation.multiselect.rememberMultiSelectState
 import com.zzh.cutemusic.presentation.navigation.Screen
 import com.zzh.cutemusic.presentation.screens.main.components.FolderHeader
+import com.zzh.cutemusic.presentation.screens.main.components.TrackCard
 import com.zzh.cutemusic.presentation.screens.playlists.components.PlaylistPicker
 import com.zzh.cutemusic.presentation.shared_components.CuteActionButton
 import com.zzh.cutemusic.presentation.shared_components.CuteSearchbar
-import com.zzh.cutemusic.presentation.shared_components.MusicListItem
 import com.zzh.cutemusic.presentation.shared_components.NoResult
 import com.zzh.cutemusic.presentation.shared_components.NoXFound
 import com.zzh.cutemusic.presentation.shared_components.SelectedBar
@@ -85,13 +89,14 @@ fun SharedTransitionScope.MainScreen(
 ) {
 
     val context = LocalContext.current
-    val lazyState = rememberLazyListState()
     var hiddenFolders by rememberHiddenFolders()
     var groupByFolders by rememberGroupByFolders()
     var trackSort by rememberTrackSort()
     var sortTracksAscending by rememberSortTracksAscending()
     val multiSelectState = rememberMultiSelectState<CuteTrack>()
     val textFieldState = rememberTextFieldState()
+    var numberOfTrackGrids by rememberTrackGrids()
+    val lazyState = rememberLazyGridState()
 
 
     if (state.isLoading) {
@@ -181,6 +186,14 @@ fun SharedTransitionScope.MainScreen(
                                     onChangeSorting = { sortTracksAscending = it },
                                     topContent = {
                                         DropdownMenuItem(
+                                            onClick = {
+                                                numberOfTrackGrids =
+                                                    if (numberOfTrackGrids == 4) 2 else numberOfTrackGrids + 1
+                                            },
+                                            text = { Text(stringResource(R.string.no_of_grids)) },
+                                            trailingIcon = { Text("$numberOfTrackGrids") }
+                                        )
+                                        DropdownMenuItem(
                                             selected = groupByFolders,
                                             onClick = { groupByFolders = !groupByFolders },
                                             shapes = MenuDefaults.itemShapes(),
@@ -249,12 +262,15 @@ fun SharedTransitionScope.MainScreen(
                 }
             }
         ) { paddingValues ->
-            LazyColumn(
+            val filteredTracks = state.tracks.fastFilter { it.title.contains(textFieldState.text, true) }
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(if (filteredTracks.isEmpty() || state.tracks.isEmpty()) 1 else numberOfTrackGrids),
                 state = lazyState,
                 contentPadding = paddingValues
             ) {
                 if (groupByFolders) {
-                    val categories = state.tracks
+                    val categories = filteredTracks
                         .groupBy { it.folder }
                         .toSortedMap()
                         .map {
@@ -266,7 +282,7 @@ fun SharedTransitionScope.MainScreen(
 
 
                     categories.fastForEach { category ->
-                        item {
+                        item(span = { GridItemSpan(maxLineSpan) }) {
                             FolderHeader(
                                 category = category,
                                 isHidden = category.name in hiddenFolders,
@@ -287,13 +303,10 @@ fun SharedTransitionScope.MainScreen(
                                     derivedStateOf { multiSelectState.isSelected(music) }
                                 }
 
-                                MusicListItem(
-                                    modifier = Modifier
-                                        .animateItem()
-                                        .padding(
-                                            vertical = 2.dp,
-                                            horizontal = 4.dp
-                                        ),
+                                TrackCard(
+                                    modifier = Modifier.animateItem(),
+                                    music = music,
+                                    musicState = musicState,
                                     onShortClick = {
                                         if (multiSelectState.isInSelectionMode) {
                                             multiSelectState.toggle(music)
@@ -308,9 +321,7 @@ fun SharedTransitionScope.MainScreen(
                                     },
                                     onLongClick = { multiSelectState.toggle(music) },
                                     isSelected = isSelected,
-                                    music = music,
-                                    musicState = musicState,
-                                    onNavigate = { onNavigate(it) },
+                                    onNavigate = onNavigate,
                                     onHandlePlayerActions = onHandlePlayerAction
                                 )
                             }
@@ -318,7 +329,7 @@ fun SharedTransitionScope.MainScreen(
                     }
                 } else {
                     if (state.tracks.isEmpty()) {
-                        item {
+                        item(span = { GridItemSpan(maxLineSpan) }) {
                             NoXFound(
                                 headlineText = R.string.no_music_title,
                                 bodyText = R.string.no_music_desc,
@@ -337,11 +348,11 @@ fun SharedTransitionScope.MainScreen(
                         }
                     } else {
 
-                        if (state.tracks.isEmpty()) {
-                            item { NoResult() }
+                        if (filteredTracks.isEmpty()) {
+                            item(span = { GridItemSpan(maxLineSpan) }) { NoResult() }
                         } else {
                             items(
-                                items = state.tracks.fastFilter { it.title.contains(textFieldState.text, true) },
+                                items = filteredTracks,
                                 key = { it.mediaId }
                             ) { music ->
 
@@ -349,8 +360,10 @@ fun SharedTransitionScope.MainScreen(
                                     derivedStateOf { multiSelectState.isSelected(music) }
                                 }
 
-                                MusicListItem(
+                                TrackCard(
                                     modifier = Modifier.animateItem(),
+                                    music = music,
+                                    musicState = musicState,
                                     onShortClick = {
                                         if (multiSelectState.isInSelectionMode) {
                                             multiSelectState.toggle(music)
@@ -364,10 +377,8 @@ fun SharedTransitionScope.MainScreen(
                                         }
                                     },
                                     onLongClick = { multiSelectState.toggle(music) },
-                                    music = music,
-                                    musicState = musicState,
-                                    onNavigate = { onNavigate(it) },
                                     isSelected = isSelected,
+                                    onNavigate = onNavigate,
                                     onHandlePlayerActions = onHandlePlayerAction
                                 )
                             }
@@ -385,7 +396,3 @@ data class Category(
     val name: String,
     val tracks: List<CuteTrack>
 )
-
-
-
-
