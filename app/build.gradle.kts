@@ -9,13 +9,13 @@ plugins {
 }
 
 android {
-    namespace = "com.sosauce.cutemusic"
+    namespace = "com.zzh.cutemusic"
     compileSdk = 36
 
     defaultConfig {
 
 
-        applicationId = "com.sosauce.cutemusic"
+        applicationId = "com.zzh.cutemusic"
         minSdk = 29
         targetSdk = 36
         versionCode = 20260307

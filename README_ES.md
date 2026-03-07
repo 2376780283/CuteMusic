@@ -35,10 +35,10 @@ Compose 和 Media3 开发。
 <a href="https://github.com/sosauce/CuteMusic/releases">
 <img src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80" />
 </a>
-<a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">
+<a href="https://apt.izzysoft.de/fdroid/index/apk/com.zzh.cutemusic">
 <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" />
 </a>
-<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">
+<a href="https://f-droid.org/en/packages/com.zzh.cutemusic/">
 <img src="https://f-droid.org/badge/get-it-on.png" height="80" />
 </a>
 
