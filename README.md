@@ -44,15 +44,6 @@ CuteMusic 是一款可爱且功能强大的 Android 离线音乐播放器！
 <image src="https://i.ibb.co/q0mdc4Z/get-it-on-github.png" height="80"/>
 </a>
 
-<a href="https://apt.izzysoft.de/fdroid/index/apk/com.sosauce.cutemusic">
-<image src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80"/>
-</a>
-
-<a href="https://f-droid.org/en/packages/com.sosauce.cutemusic/">
-<image src="https://f-droid.org/badge/get-it-on.png" height="80"/>
-</a>
-
-
 <p align="center">
 
 推荐从 GitHub 安装，这样可以确保获得最新版本更新。
