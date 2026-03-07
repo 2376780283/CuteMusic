@@ -11,6 +11,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,12 +25,12 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,102 +56,101 @@ fun Artwork(
     onHandlePlayerActions: (PlayerActions) -> Unit,
 ) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val useCarousel by rememberCarousel()
-    var artworkShape by rememberArtworkShape()
+    val artworkShape by rememberArtworkShape()
+    val isTablet = configuration.screenWidthDp > 600
+    val responsiveWidthFraction = if (isTablet) 0.6f else 0.9f
+    val artworkModifier = Modifier
+        .fillMaxWidth(responsiveWidthFraction)
+        .aspectRatio(1f)
 
+    Box(
+        modifier = pagerModifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ) {
+        if (useCarousel) {
+            val carouselState =
+                rememberCarouselState(initialItem = musicState.mediaIndex) { musicState.loadedMedias.size }
 
+            LaunchedEffect(carouselState, musicState.mediaIndex) {
+                if (!carouselState.isScrollInProgress &&
+                    carouselState.currentItem != musicState.mediaIndex
+                ) {
+                    carouselState.animateScrollToItem(musicState.mediaIndex)
+                }
 
-    if (useCarousel) {
-        val carouselState =
-            rememberCarouselState(initialItem = musicState.mediaIndex) { musicState.loadedMedias.size }
-
-        LaunchedEffect(carouselState, musicState.mediaIndex) {
-            if (!carouselState.isScrollInProgress &&
-                carouselState.currentItem != musicState.mediaIndex
-            ) {
-                carouselState.animateScrollToItem(musicState.mediaIndex)
-            }
-
-            // Prevents music switching mid-scroll
-            snapshotFlow { carouselState.isScrollInProgress }
-                .collectLatest { isScrolling ->
-                    if (!isScrolling) {
-                        val settledPage = carouselState.currentItem
-                        if (settledPage != musicState.mediaIndex) {
-                            if (musicState.shuffle) {
-                                onHandlePlayerActions(PlayerActions.PlayRandom)
-                            } else {
-                                onHandlePlayerActions(PlayerActions.SeekToMusicIndex(settledPage))
+                // Prevents music switching mid-scroll
+                snapshotFlow { carouselState.isScrollInProgress }
+                    .collectLatest { isScrolling ->
+                        if (!isScrolling) {
+                            val settledPage = carouselState.currentItem
+                            if (settledPage != musicState.mediaIndex) {
+                                if (musicState.shuffle) {
+                                    onHandlePlayerActions(PlayerActions.PlayRandom)
+                                } else {
+                                    onHandlePlayerActions(PlayerActions.SeekToMusicIndex(settledPage))
+                                }
                             }
                         }
                     }
+            }
+
+            HorizontalCenteredHeroCarousel(
+                state = carouselState,
+                modifier = artworkModifier.ignoreParentPadding(),
+                itemSpacing = 10.dp
+            ) { page ->
+                val image = rememberAsyncImagePainter(musicState.loadedMedias[page].artUri)
+                val imageState by image.state.collectAsStateWithLifecycle()
+
+                when (imageState) {
+                    is AsyncImagePainter.State.Error -> {
+                        ErrorImage(modifier = Modifier.fillMaxSize())
+                    }
+                    else -> {
+                        Image(
+                            painter = image,
+                            contentDescription = stringResource(R.string.artwork),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .maskClip(MaterialTheme.shapes.extraLarge),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                 }
-        }
+            }
 
-
-        HorizontalCenteredHeroCarousel(
-            state = carouselState,
-            modifier = pagerModifier
-                .ignoreParentPadding()
-                .aspectRatio(1f)
-                .wrapContentSize()
-                .fillMaxSize(),
-            itemSpacing = 10.dp
-        ) { page ->
-            val image = rememberAsyncImagePainter(musicState.loadedMedias[page].artUri)
+        } else {
+            val image =
+                rememberAsyncImagePainter(ImageUtils.imageRequester(musicState.track.artUri, context))
             val imageState by image.state.collectAsStateWithLifecycle()
 
             when (imageState) {
-                is AsyncImagePainter.State.Error -> ErrorImage()
+                is AsyncImagePainter.State.Error -> {
+                    ErrorImage(modifier = artworkModifier)
+                }
                 else -> {
                     Image(
                         painter = image,
                         contentDescription = stringResource(R.string.artwork),
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .wrapContentSize()
-                            .fillMaxSize()
-                            .maskClip(MaterialTheme.shapes.extraLarge),
+                        modifier = artworkModifier
+                            .clip(artworkShape.toShape()),
                         contentScale = ContentScale.Crop
                     )
                 }
-            }
-        }
-
-    } else {
-
-        val image =
-            rememberAsyncImagePainter(ImageUtils.imageRequester(musicState.track.artUri, context))
-        val imageState by image.state.collectAsStateWithLifecycle()
-
-        when (imageState) {
-            is AsyncImagePainter.State.Error -> ErrorImage()
-            else -> {
-                Image(
-                    painter = image,
-                    contentDescription = stringResource(R.string.artwork),
-                    modifier = Modifier
-                        .aspectRatio(1f)
-                        .wrapContentSize()
-                        .fillMaxSize()
-                        .clip(artworkShape.toShape()),
-                    contentScale = ContentScale.Crop
-                )
             }
         }
     }
 }
 
 @Composable
-private fun ErrorImage() {
-
-    var artworkShape by rememberArtworkShape()
+private fun ErrorImage(modifier: Modifier = Modifier) {
+    val artworkShape by rememberArtworkShape()
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .aspectRatio(1f)
-            .wrapContentSize()
-            .fillMaxSize()
             .clip(artworkShape.toShape())
             .background(MaterialTheme.colorScheme.surfaceContainer),
         contentAlignment = Alignment.Center
@@ -159,9 +160,6 @@ private fun ErrorImage() {
             contentDescription = null,
             modifier = Modifier.size(110.dp),
             tint = contentColorFor(MaterialTheme.colorScheme.surfaceContainer)
-
         )
     }
 }
-
-
