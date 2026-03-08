@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.zzh.cutemusic.R
@@ -57,6 +58,7 @@ import com.zzh.cutemusic.presentation.shared_components.MusicDetailsDialog
 import com.zzh.cutemusic.utils.SharedTransitionKeys
 
 @Composable
+@Preview
 fun SharedTransitionScope.NowPlaying(
     musicState: MusicState,
     onHandlePlayerActions: (PlayerActions) -> Unit,
@@ -170,8 +172,7 @@ private fun SharedTransitionScope.NowPlayingContent(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(horizontal = 15.dp)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -190,7 +191,8 @@ private fun SharedTransitionScope.NowPlayingContent(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp), // 距离底部 BottomAppBar 的间距
+                    .padding(bottom = 16.dp)
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {

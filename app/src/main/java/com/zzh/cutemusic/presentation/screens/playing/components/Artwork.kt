@@ -9,6 +9,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,7 +33,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isSpecified
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
@@ -58,15 +61,26 @@ fun Artwork(
     val useCarousel by rememberCarousel()
     val artworkShape by rememberArtworkShape()
     val isTablet = configuration.screenWidthDp > 600
-    val responsiveWidthFraction = if (isTablet) 0.6f else 0.9f
-    val artworkModifier = Modifier
-        .fillMaxWidth(responsiveWidthFraction)
-        .aspectRatio(1f)
 
-    Box(
+    BoxWithConstraints(
         modifier = pagerModifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
+        val maxWidth = maxWidth
+        val maxHeight = maxHeight
+
+        val size = if (maxHeight.isSpecified && maxHeight > 0.dp) {
+            val fraction = if (isTablet) 0.7f else 0.9f
+            minOf(maxWidth * fraction, maxHeight * 0.95f)
+        } else {
+            val fraction = if (isTablet) 0.6f else 0.9f
+            maxWidth * fraction
+        }
+
+        val artworkModifier = Modifier
+            .size(size)
+            .aspectRatio(1f)
+
         if (useCarousel) {
             val carouselState =
                 rememberCarouselState(initialItem = musicState.mediaIndex) { musicState.loadedMedias.size }
