@@ -41,7 +41,7 @@ fun SettingsCredits(
         "Erenay",
         "Izzy",
         "ZZH life",
-        "Pixel Z"
+        "Pixel Z",
         "Kin69",
         "Leo Heitmann Ruiz",
         "Luiggi33",

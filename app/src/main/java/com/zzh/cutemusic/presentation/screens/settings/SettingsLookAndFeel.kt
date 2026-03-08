@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,70 +57,102 @@ fun SettingsLookAndFeel(
     var useExpressivePalette by rememberUseExpressivePalette()
     var numberOfAlbumGrids by rememberAlbumGrids()
     var numberOfTrackGrids by rememberTrackGrids()
-    val themeItems = listOf(
-        ThemeItem(
-            onClick = { theme = CuteTheme.SYSTEM },
-            backgroundColor = if (isSystemInDarkTheme()) anyDarkColorScheme().background else anyLightColorScheme().background,
-            text = stringResource(R.string.system),
-            isSelected = theme == CuteTheme.SYSTEM,
-            iconAndTint = Pair(
-                R.drawable.system_theme,
-                if (isSystemInDarkTheme()) anyDarkColorScheme().onBackground else anyLightColorScheme().onBackground
-            )
-        ),
-        ThemeItem(
-            onClick = { theme = CuteTheme.DARK },
-            backgroundColor = anyDarkColorScheme().background,
-            text = stringResource(R.string.dark_mode),
-            isSelected = theme == CuteTheme.DARK,
-            iconAndTint = Pair(
-                R.drawable.dark_mode,
-                anyDarkColorScheme().onBackground
-            )
-        ),
-        ThemeItem(
-            onClick = { theme = CuteTheme.LIGHT },
-            backgroundColor = anyLightColorScheme().background,
-            text = stringResource(R.string.light_mode),
-            isSelected = theme == CuteTheme.LIGHT,
-            iconAndTint = Pair(
-                R.drawable.light_mode,
-                anyLightColorScheme().onBackground
-            )
-        ),
-        ThemeItem(
-            onClick = { theme = CuteTheme.AMOLED },
-            backgroundColor = Color.Black,
-            text = stringResource(R.string.amoled_mode),
-            isSelected = theme == CuteTheme.AMOLED,
-            iconAndTint = Pair(R.drawable.amoled, Color.White)
-        )
-    )
-    val fontItems = listOf(
-        FontItem(
-            onClick = { useSystemFont = false },
-            fontStyle = FontStyle.DEFAULT,
-            borderColor = if (!useSystemFont) MaterialTheme.colorScheme.primary else Color.Transparent,
-            text = {
-                Text(
-                    text = "Tt",
-                    fontFamily = nunitoFontFamily,
-                    fontWeight = FontWeight.Bold
+
+    val darkColorScheme = anyDarkColorScheme()
+    val lightColorScheme = anyLightColorScheme()
+    val systemInDark = isSystemInDarkTheme()
+
+    val themeItems = remember(theme, systemInDark, darkColorScheme, lightColorScheme) {
+        listOf(
+            ThemeItem(
+                onClick = { theme = CuteTheme.SYSTEM },
+                backgroundColor = if (systemInDark) darkColorScheme.background else lightColorScheme.background,
+                text = "System", 
+                isSelected = theme == CuteTheme.SYSTEM,
+                iconAndTint = Pair(
+                    R.drawable.system_theme,
+                    if (systemInDark) darkColorScheme.onBackground else lightColorScheme.onBackground
                 )
-            },
-        ),
-        FontItem(
-            onClick = { useSystemFont = true },
-            fontStyle = FontStyle.SYSTEM,
-            borderColor = if (useSystemFont) MaterialTheme.colorScheme.primary else Color.Transparent,
-            text = {
-                Text(
-                    text = "Tt",
-                    fontWeight = FontWeight.Bold
+            ),
+            ThemeItem(
+                onClick = { theme = CuteTheme.DARK },
+                backgroundColor = darkColorScheme.background,
+                text = "Dark",
+                isSelected = theme == CuteTheme.DARK,
+                iconAndTint = Pair(
+                    R.drawable.dark_mode,
+                    darkColorScheme.onBackground
                 )
-            }
+            ),
+            ThemeItem(
+                onClick = { theme = CuteTheme.LIGHT },
+                backgroundColor = lightColorScheme.background,
+                text = "Light",
+                isSelected = theme == CuteTheme.LIGHT,
+                iconAndTint = Pair(
+                    R.drawable.light_mode,
+                    lightColorScheme.onBackground
+                )
+            ),
+            ThemeItem(
+                onClick = { theme = CuteTheme.AMOLED },
+                backgroundColor = Color.Black,
+                text = "Amoled",
+                isSelected = theme == CuteTheme.AMOLED,
+                iconAndTint = Pair(R.drawable.amoled, Color.White)
+            )
         )
-    )
+    }
+
+    // Since stringResource is a composable, we should get labels outside remember or use them inside ThemeSelector
+    val systemLabel = stringResource(R.string.system)
+    val darkLabel = stringResource(R.string.dark_mode)
+    val lightLabel = stringResource(R.string.light_mode)
+    val amoledLabel = stringResource(R.string.amoled_mode)
+    
+    val displayThemeItems = remember(themeItems, systemLabel, darkLabel, lightLabel, amoledLabel) {
+        themeItems.mapIndexed { index, item ->
+            item.copy(text = when(index) {
+                0 -> systemLabel
+                1 -> darkLabel
+                2 -> lightLabel
+                else -> amoledLabel
+            })
+        }
+    }
+
+    val fontItems = remember(useSystemFont) {
+        listOf(
+            FontItem(
+                onClick = { useSystemFont = false },
+                fontStyle = FontStyle.DEFAULT,
+                borderColor = if (!useSystemFont) Color.Unspecified else Color.Transparent, // Use placeholder to resolve later
+                text = {
+                    Text(
+                        text = "Tt",
+                        fontFamily = nunitoFontFamily,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+            ),
+            FontItem(
+                onClick = { useSystemFont = true },
+                fontStyle = FontStyle.SYSTEM,
+                borderColor = if (useSystemFont) Color.Unspecified else Color.Transparent,
+                text = {
+                    Text(
+                        text = "Tt",
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            )
+        )
+    }
+
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val correctedFontItems = remember(fontItems, primaryColor) {
+        fontItems.map { it.copy(borderColor = if (it.borderColor == Color.Unspecified) primaryColor else it.borderColor) }
+    }
 
     Scaffold(
         bottomBar = {
@@ -142,7 +175,7 @@ fun SettingsLookAndFeel(
                     shape = RoundedCornerShape(24.dp)
                 ) {
                     LazyRowWithScrollButton(
-                        items = themeItems
+                        items = displayThemeItems
                     ) { theme ->
                         ThemeSelector(theme)
                     }
@@ -159,7 +192,7 @@ fun SettingsLookAndFeel(
                     shape = RoundedCornerShape(24.dp)
                 ) {
                     LazyRowWithScrollButton(
-                        items = fontItems
+                        items = correctedFontItems
                     ) { font ->
                         FontSelector(font)
                     }

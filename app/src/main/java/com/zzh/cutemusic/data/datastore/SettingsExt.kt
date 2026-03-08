@@ -25,13 +25,12 @@ fun <T> rememberPreference(
 ): MutableState<T> {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    val state by remember {
+    val state by remember(key, defaultValue) {
         context.dataStore.data
             .map { it[key] ?: defaultValue }
     }.collectAsStateWithLifecycle(defaultValue)
 
-
-    return remember(state) {
+    return remember(key) {
         object : MutableState<T> {
             override var value: T
                 get() = state
@@ -56,7 +55,7 @@ inline fun <reified T> rememberCustomPreference(
 ): MutableState<T> {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    val state by remember {
+    val state by remember(key, defaultValue) {
         context.dataStore.data
             .map { it[key] }
             .map {
@@ -67,7 +66,7 @@ inline fun <reified T> rememberCustomPreference(
     }.collectAsStateWithLifecycle(defaultValue)
 
 
-    return remember(state) {
+    return remember(key) {
         object : MutableState<T> {
             override var value: T
                 get() = state
