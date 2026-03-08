@@ -37,7 +37,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.zzh.cutemusic.R
@@ -58,7 +57,6 @@ import com.zzh.cutemusic.presentation.shared_components.MusicDetailsDialog
 import com.zzh.cutemusic.utils.SharedTransitionKeys
 
 @Composable
-@Preview
 fun SharedTransitionScope.NowPlaying(
     musicState: MusicState,
     onHandlePlayerActions: (PlayerActions) -> Unit,
