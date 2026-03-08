@@ -72,13 +72,12 @@ fun SettingsScreen(
             description = stringResource(R.string.library_desc),
             onNavigate = { backStack.add(SettingsScreens.Library) }
         ),
-//        Item(
-//            icon = rememberVectorPainter(Icons.Outlined.MoreHoriz),
-//            name = stringResource(R.string.more),
-//            description = stringResource(R.string.more_desc),
-//            onNavigate = { backStack.add() }
-//        )
-
+        Item(
+            icon = R.drawable.info_filled,
+            name = stringResource(R.string.credits),
+            description = stringResource(R.string.cm_by_sosauce),
+            onNavigate = { backStack.add(SettingsScreens.Credits) }
+        )
     )
 
     NavDisplay(
@@ -156,6 +155,12 @@ fun SettingsScreen(
                     musicState = musicState,
                     onNavigate = onNavigate,
                     onHandlePlayerActions = onHandlePlayerActions,
+                    onNavigateUp = backStack::removeLastOrNull
+                )
+            }
+
+            entry<SettingsScreens.Credits> {
+                SettingsCredits(
                     onNavigateUp = backStack::removeLastOrNull
                 )
             }

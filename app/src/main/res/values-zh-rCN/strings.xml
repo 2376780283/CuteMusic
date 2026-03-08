@@ -20,6 +20,9 @@
     <string name="albums">专辑</string>
     <string name="music">曲目</string>
     <string name="cm_by_sosauce">CuteMusic by sosauce</string>
+    <string name="credits">开发者名单</string>
+    <string name="contributors">贡献者</string>
+    <string name="made_with_love">为音乐社区倾心打造</string>
     <string name="app_icon">应用图标</string>
     <string name="search">搜索</string>
     <string name="close">关闭</string>

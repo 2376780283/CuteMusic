@@ -21,4 +21,7 @@ sealed class SettingsScreens() : NavKey {
     @Serializable
     data object Library : SettingsScreens()
 
+    @Serializable
+    data object Credits : SettingsScreens()
+
 }

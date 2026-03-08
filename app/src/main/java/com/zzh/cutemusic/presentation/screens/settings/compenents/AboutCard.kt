@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -36,55 +39,52 @@ fun AboutCard() {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
 
-    Card(
-        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surfaceContainer),
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 2.dp),
-        shape = RoundedCornerShape(24.dp)
+            .padding(top = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+            modifier = Modifier
+                .size(120.dp)
+                .clip(RoundedCornerShape(28.dp))
+                .background(Color(0xFFFAB3AA)),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .padding(15.dp)
-                    .clip(RoundedCornerShape(15))
-                    .background(Color(0xFFFAB3AA)),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.music_note_rounded),
-                    contentDescription = stringResource(id = R.string.app_icon),
-                    modifier = Modifier.size(60.dp)
-                )
-            }
-            Column {
-                Text(
-                    text = stringResource(id = R.string.cm_by_sosauce),
-
-                    )
-                Text(
-                    text = "${stringResource(id = R.string.version)} ${context.appVersion}",
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+            Icon(
+                painter = painterResource(R.drawable.music_note_rounded),
+                contentDescription = stringResource(id = R.string.app_icon),
+                modifier = Modifier.size(80.dp),
+                tint = Color.White
+            )
         }
+        
+        Spacer(Modifier.height(16.dp))
+        
+        Text(
+            text = "CuteMusic",
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        
+        Text(
+            text = "${stringResource(id = R.string.version)} ${context.appVersion}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
         Row(
-            modifier = Modifier.padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(2.dp)
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Button(
                 onClick = { uriHandler.openUri(GITHUB_RELEASES) },
-                shape = RoundedCornerShape(
-                    topStart = 24.dp,
-                    bottomStart = 24.dp,
-                    topEnd = 4.dp,
-                    bottomEnd = 4.dp
-                ),
+                shape = RoundedCornerShape(24.dp),
                 modifier = Modifier.weight(1f)
             ) {
+                Icon(painterResource(R.drawable.reset), contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = stringResource(id = R.string.update),
                     maxLines = 1
@@ -92,14 +92,11 @@ fun AboutCard() {
             }
             Button(
                 onClick = { uriHandler.openUri(SUPPORT_PAGE) },
-                shape = RoundedCornerShape(
-                    topStart = 4.dp,
-                    bottomStart = 4.dp,
-                    topEnd = 24.dp,
-                    bottomEnd = 24.dp
-                ),
+                shape = RoundedCornerShape(24.dp),
                 modifier = Modifier.weight(1f)
             ) {
+                Icon(painterResource(R.drawable.info_filled), contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(8.dp))
                 Text(
                     text = stringResource(id = R.string.support),
                     maxLines = 1
