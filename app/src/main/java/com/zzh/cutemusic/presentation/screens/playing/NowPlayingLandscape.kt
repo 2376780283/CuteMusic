@@ -36,7 +36,7 @@ import com.zzh.cutemusic.presentation.navigation.Screen
 import com.zzh.cutemusic.presentation.screens.playing.components.ActionButtonsRow
 import com.zzh.cutemusic.presentation.screens.playing.components.Artwork
 import com.zzh.cutemusic.presentation.screens.playing.components.CuteSlider
-import com.zzh.cutemusic.presentation.screens.playing.components.PlayingTopRow
+import com.zzh.cutemusic.presentation.screens.playing.components.PlayingTopRowLandscape
 import com.zzh.cutemusic.presentation.screens.playing.components.QuickActionsRow
 import com.zzh.cutemusic.presentation.screens.playing.components.SpeedCard
 import com.zzh.cutemusic.presentation.screens.playing.components.TitleAndArtist
@@ -111,7 +111,7 @@ fun SharedTransitionScope.NowPlayingLandscape(
                     .fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                PlayingTopRow(
+                PlayingTopRowLandscape(
                     musicState = musicState,
                     onNavigate = onNavigate,
                     onShrinkToSearchbar = onShrinkToSearchbar

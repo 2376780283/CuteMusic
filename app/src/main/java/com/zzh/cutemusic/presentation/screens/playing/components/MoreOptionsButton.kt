@@ -64,6 +64,9 @@ fun MoreOptionsButton(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { }
     val moreOptions = listOf(
         MoreOptions(
+        // ---
+        // TODO : 实现app内置eq
+        // ---
             text = { stringResource(R.string.open_eq) },
             onClick = {
                 try {

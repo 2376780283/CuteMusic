@@ -32,6 +32,44 @@ fun PlayingTopRow(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+    
+        IconButton(
+            onClick = onShrinkToSearchbar,
+            shapes = IconButtonDefaults.shapes(),
+            colors = IconButtonDefaults.filledIconButtonColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                contentColor = contentColorFor(MaterialTheme.colorScheme.surfaceContainer)
+            ),
+            modifier = Modifier
+                .size(IconButtonDefaults.smallContainerSize(IconButtonDefaults.IconButtonWidthOption.Wide))
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.arrow_down),
+                contentDescription = null,
+                modifier = Modifier.size(28.dp)
+            )
+        }
+
+        MoreOptionsButton(
+            musicState = musicState,
+            onNavigate = onNavigate
+        )
+    }
+}
+
+@Composable
+fun PlayingTopRowLandscape(
+    modifier: Modifier = Modifier,
+    musicState: MusicState,
+    onNavigate: (Screen) -> Unit,
+    onShrinkToSearchbar: () -> Unit
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.End
+    ) {
+    
         IconButton(
             onClick = onShrinkToSearchbar,
             shapes = IconButtonDefaults.shapes(),
