@@ -30,6 +30,9 @@ import com.zzh.cutemusic.R
 import com.zzh.cutemusic.domain.actions.PlayerActions
 import com.zzh.cutemusic.presentation.screens.main.Category
 import com.zzh.cutemusic.utils.ICON_TEXT_SPACING
+import com.zzh.cutemusic.utils.rememberSearchbarMaxFloatValue
+import com.zzh.cutemusic.utils.rememberSearchbarRightPadding
+import com.zzh.cutemusic.utils.selfAlignHorizontally
 import java.io.File
 
 @Composable
@@ -47,7 +50,9 @@ fun FolderHeader(
     CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.primary) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .selfAlignHorizontally()
+                .fillMaxWidth(rememberSearchbarMaxFloatValue())
+                .padding(end = rememberSearchbarRightPadding())
                 .padding(horizontal = 5.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .clickable { onToggleVisibility() },

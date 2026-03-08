@@ -25,14 +25,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.zzh.cutemusic.R
+import com.zzh.cutemusic.data.datastore.rememberAlbumGrids
 import com.zzh.cutemusic.data.datastore.rememberAppTheme
 import com.zzh.cutemusic.data.datastore.rememberShowShuffleButton
+import com.zzh.cutemusic.data.datastore.rememberTrackGrids
 import com.zzh.cutemusic.data.datastore.rememberUseArtTheme
 import com.zzh.cutemusic.data.datastore.rememberUseExpressivePalette
 import com.zzh.cutemusic.data.datastore.rememberUseSystemFont
 import com.zzh.cutemusic.presentation.screens.settings.compenents.FontSelector
 import com.zzh.cutemusic.presentation.screens.settings.compenents.SettingsCards
 import com.zzh.cutemusic.presentation.screens.settings.compenents.SettingsWithTitle
+import com.zzh.cutemusic.presentation.screens.settings.compenents.SliderSettingsCards
 import com.zzh.cutemusic.presentation.screens.settings.compenents.ThemeSelector
 import com.zzh.cutemusic.presentation.shared_components.CuteNavigationButton
 import com.zzh.cutemusic.presentation.shared_components.LazyRowWithScrollButton
@@ -51,6 +54,8 @@ fun SettingsLookAndFeel(
     var showShuffleButton by rememberShowShuffleButton()
     var useMaterialArt by rememberUseArtTheme()
     var useExpressivePalette by rememberUseExpressivePalette()
+    var numberOfAlbumGrids by rememberAlbumGrids()
+    var numberOfTrackGrids by rememberTrackGrids()
     val themeItems = listOf(
         ThemeItem(
             onClick = { theme = CuteTheme.SYSTEM },
@@ -176,6 +181,26 @@ fun SettingsLookAndFeel(
                     topDp = 4.dp,
                     bottomDp = 24.dp,
                     text = stringResource(R.string.use_expr_palette)
+                )
+            }
+            SettingsWithTitle(
+                title = R.string.grid
+            ) {
+                SliderSettingsCards(
+                    value = numberOfAlbumGrids,
+                    onValueChange = { numberOfAlbumGrids = it },
+                    topDp = 24.dp,
+                    bottomDp = 4.dp,
+                    text = R.string.no_of_album_grids,
+                    valueRange = 2f..4f
+                )
+                SliderSettingsCards(
+                    value = numberOfTrackGrids,
+                    onValueChange = { numberOfTrackGrids = it },
+                    topDp = 4.dp,
+                    bottomDp = 24.dp,
+                    text = R.string.no_of_track_grids,
+                    valueRange = 2f..4f
                 )
             }
             SettingsWithTitle(

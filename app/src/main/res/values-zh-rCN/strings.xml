@@ -54,6 +54,7 @@
     <string name="ntg_playing">无正在播放的内容</string>
     <string name="ui">用户界面</string>
     <string name="use_art">Material风格</string>
+    <string name="grid">格</string>
     <string name="success">成功</string>
     <string name="error_saving">保存时出错</string>
     <string name="editor">编辑器</string>

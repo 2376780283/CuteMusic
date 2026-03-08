@@ -65,6 +65,7 @@
     <string name="success">Success</string>
     <string name="error_saving">Error while saving changes.</string>
     <string name="editor">Editor</string>
+    <string name="grid">Grid</string>
     <string name="details">Details</string>
     <string name="classic_slider">Use classic slider</string>
     <string name="cancel">Cancel</string>
@@ -113,6 +114,8 @@
     <string name="search_here">Search here</string>
     <string name="click_hint">Click me!</string>
     <string name="no_of_grids">Number of grids</string>
+    <string name="no_of_track_grids">Number of track grids</string>
+    <string name="no_of_album_grids">Number of album grids</string>
     <string name="show_shuffle_btn">Show shuffle button</string>
     <string name="not_m3u_file">Not a m3u file!</string>
     <string name="m3u_saved_good">m3u file saved successfully!</string>

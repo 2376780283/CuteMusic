@@ -113,6 +113,7 @@ fun SliderSettingsCards(
     text: Int,
     onValueChange: (Int) -> Unit,
     optionalDescription: Int? = null,
+    valueRange: ClosedFloatingPointRange<Float> = 0f..60f
 ) {
 
     val sliderStyle by rememberSliderStyle()
@@ -159,7 +160,7 @@ fun SliderSettingsCards(
                         }
                         tempValue = null
                     },
-                    valueRange = 0f..60f
+                    valueRange = valueRange
                 )
             )
             optionalDescription?.let {
