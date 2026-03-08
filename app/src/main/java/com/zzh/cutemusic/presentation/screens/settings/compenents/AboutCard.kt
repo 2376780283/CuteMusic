@@ -49,11 +49,11 @@ fun AboutCard() {
             modifier = Modifier
                 .size(120.dp)
                 .clip(RoundedCornerShape(28.dp))
-                .background(Color(0xFFFAB3AA)),
+                .background(Color(0xFFF2E4DA)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                painter = painterResource(R.drawable.music_note_rounded),
+                painter = painterResource(R.drawable.ic_launcher_adaptive_fore),
                 contentDescription = stringResource(id = R.string.app_icon),
                 modifier = Modifier.size(80.dp),
                 tint = Color.White
@@ -63,7 +63,7 @@ fun AboutCard() {
         Spacer(Modifier.height(16.dp))
         
         Text(
-            text = "CuteMusic",
+            text = "CuteMusic(Mahiro(〜￣▽￣)〜)",
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
