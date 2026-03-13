@@ -79,6 +79,9 @@ class MusicViewModel(
 
                 lastMediaId = mediaItem.mediaId
                 currentTrackStartTime = System.currentTimeMillis()
+                
+                // Increment play count when a new track starts
+                incrementPlayCount(mediaItem.mediaId)
 
                 musicState.value.loadedMedias.fastFirstOrNull { track ->
                     track.mediaId == mediaItem.mediaId
@@ -415,10 +418,11 @@ class MusicViewModel(
     }
 
     private fun savePlaybackStats(mediaId: String) {
-        val duration = System.currentTimeMillis() - currentTrackStartTime
-        if (duration <= 0) return
+        val now = System.currentTimeMillis()
+        val duration = now - currentTrackStartTime
+        if (duration < 500) return
 
-        currentTrackStartTime = System.currentTimeMillis()
+        currentTrackStartTime = now
 
         viewModelScope.launch(Dispatchers.IO) {
             val stat = playbackStatsRepository.getPlaybackStat(mediaId)
@@ -427,7 +431,19 @@ class MusicViewModel(
             playbackStatsRepository.upsertPlaybackStat(
                 stat.copy(
                     totalPlayTimeMs = stat.totalPlayTimeMs + duration,
-                    playCount = if (stat.totalPlayTimeMs == 0L) stat.playCount + 1 else stat.playCount,
+                    lastPlayedTimestamp = now
+                )
+            )
+        }
+    }
+
+    private fun incrementPlayCount(mediaId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val stat = playbackStatsRepository.getPlaybackStat(mediaId)
+                ?: PlaybackStat(mediaId = mediaId)
+            playbackStatsRepository.upsertPlaybackStat(
+                stat.copy(
+                    playCount = stat.playCount + 1,
                     lastPlayedTimestamp = System.currentTimeMillis()
                 )
             )
