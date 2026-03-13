@@ -198,4 +198,8 @@
         <item quantity="one">%d album</item>
         <item quantity="other">%d albums</item>
     </plurals>
+<string name="top_played">Top Played</string>
+<string name="top_played_desc">Check your most played tracks</string>
+
+<string name="play_stats_format">Played %1$d times • Total time: %2$s</string>
 </resources>

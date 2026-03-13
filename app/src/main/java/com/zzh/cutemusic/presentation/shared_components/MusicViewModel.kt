@@ -44,14 +44,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.Duration
 
+import com.zzh.cutemusic.data.models.PlaybackStat
+import com.zzh.cutemusic.domain.repository.PlaybackStatsRepository
+import kotlinx.coroutines.Dispatchers
+
 class MusicViewModel(
     private val application: Application,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val playbackStatsRepository: PlaybackStatsRepository
 ) : AndroidViewModel(application) {
 
     private var mediaController: MediaController? = null
     private val _musicState = MutableStateFlow(MusicState())
     val musicState = _musicState.asStateFlow()
+
+    private var currentTrackStartTime: Long = 0
+    private var lastMediaId: String? = null
 
     var sleepCountdownTimer: CountDownTimer? = null
     private val playerListener =
@@ -59,7 +67,18 @@ class MusicViewModel(
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 super.onMediaItemTransition(mediaItem, reason)
 
-                if (mediaItem == null) return
+                // Save stats for the previous track
+                lastMediaId?.let { mediaId ->
+                    savePlaybackStats(mediaId)
+                }
+
+                if (mediaItem == null) {
+                    lastMediaId = null
+                    return
+                }
+
+                lastMediaId = mediaItem.mediaId
+                currentTrackStartTime = System.currentTimeMillis()
 
                 musicState.value.loadedMedias.fastFirstOrNull { track ->
                     track.mediaId == mediaItem.mediaId
@@ -89,6 +108,11 @@ class MusicViewModel(
 
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 super.onIsPlayingChanged(isPlaying)
+                if (isPlaying) {
+                    currentTrackStartTime = System.currentTimeMillis()
+                } else {
+                    lastMediaId?.let { savePlaybackStats(it) }
+                }
                 _musicState.update {
                     it.copy(
                         isPlaying = isPlaying
@@ -387,6 +411,26 @@ class MusicViewModel(
                     mediaController!!.addMediaItem(MediaItem.fromUri(action.cuteTrack.uri))
                 }
             }
+        }
+    }
+
+    private fun savePlaybackStats(mediaId: String) {
+        val duration = System.currentTimeMillis() - currentTrackStartTime
+        if (duration <= 0) return
+
+        currentTrackStartTime = System.currentTimeMillis()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val stat = playbackStatsRepository.getPlaybackStat(mediaId)
+                ?: PlaybackStat(mediaId = mediaId)
+
+            playbackStatsRepository.upsertPlaybackStat(
+                stat.copy(
+                    totalPlayTimeMs = stat.totalPlayTimeMs + duration,
+                    playCount = if (stat.totalPlayTimeMs == 0L) stat.playCount + 1 else stat.playCount,
+                    lastPlayedTimestamp = System.currentTimeMillis()
+                )
+            )
         }
     }
 }

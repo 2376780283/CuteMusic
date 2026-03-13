@@ -135,4 +135,8 @@
         <item quantity="one">%d 个专辑</item>
         <item quantity="other">%d 个专辑</item>
     </plurals>
+<string name="top_played">播放统计</string>
+<string name="top_played_desc">查看你最常播放的曲目</string>
+
+<string name="play_stats_format">播放 %1$d 次 • 总计: %2$s</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.zzh.cutemusic.data.models.Playlist
+import com.zzh.cutemusic.data.models.PlaybackStat
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,5 +23,12 @@ interface PlaylistDao {
     @Query("SELECT * FROM playlist WHERE id = :id")
     fun getPlaylistDetails(id: Int): Flow<Playlist>
 
+    @Upsert
+    suspend fun upsertPlaybackStat(playbackStat: PlaybackStat)
 
+    @Query("SELECT * FROM PlaybackStat WHERE mediaId = :mediaId")
+    suspend fun getPlaybackStat(mediaId: String): PlaybackStat?
+
+    @Query("SELECT * FROM PlaybackStat ORDER BY totalPlayTimeMs DESC")
+    fun getTopPlayedTracks(): Flow<List<PlaybackStat>>
 }

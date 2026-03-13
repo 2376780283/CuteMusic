@@ -48,6 +48,8 @@ import com.zzh.cutemusic.presentation.screens.playlists.PlaylistViewModel
 import com.zzh.cutemusic.presentation.screens.playlists.PlaylistsScreen
 import com.zzh.cutemusic.presentation.screens.settings.SettingsScreen
 import com.zzh.cutemusic.presentation.screens.setup.SetupScreen
+import com.zzh.cutemusic.presentation.screens.stats.StatsScreen
+import com.zzh.cutemusic.presentation.screens.stats.StatsViewModel
 import com.zzh.cutemusic.presentation.shared_components.MusicViewModel
 import com.zzh.cutemusic.utils.ImageUtils
 import com.zzh.cutemusic.utils.LocalScreen
@@ -138,6 +140,16 @@ fun Nav(onImageLoad: (ImageBitmap?) -> Unit) {
                             musicState = musicState,
                             onNavigate = backStack::navigate,
                             onHandlePlayerActions = musicViewModel::handlePlayerActions
+                        )
+                    }
+
+                    entry<Screen.Stats> {
+                        val viewModel = koinViewModel<StatsViewModel>()
+                        StatsScreen(
+                            viewModel = viewModel,
+                            musicState = musicState,
+                            onNavigate = backStack::navigate,
+                            onHandlePlayerAction = musicViewModel::handlePlayerActions
                         )
                     }
 

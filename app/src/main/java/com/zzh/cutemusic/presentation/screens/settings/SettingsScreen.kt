@@ -73,6 +73,12 @@ fun SettingsScreen(
             onNavigate = { backStack.add(SettingsScreens.Library) }
         ),
         Item(
+            icon = R.drawable.duration,
+            name = stringResource(R.string.top_played),
+            description = stringResource(R.string.top_played_desc),
+            onNavigate = { onNavigate(Screen.Stats) }
+        ),
+        Item(
             icon = R.drawable.info_filled,
             name = stringResource(R.string.credits),
             description = stringResource(R.string.cm_by_sosauce),

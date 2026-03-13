@@ -5,10 +5,12 @@ import com.zzh.cutemusic.data.AbstractTracksScanner
 import com.zzh.cutemusic.data.LyricsParser
 import com.zzh.cutemusic.data.datastore.UserPreferences
 import com.zzh.cutemusic.data.playlist.MIGRATION_1_2
+import com.zzh.cutemusic.data.playlist.MIGRATION_2_3
 import com.zzh.cutemusic.data.playlist.PlaylistDatabase
 import com.zzh.cutemusic.domain.repository.AlbumsRepository
 import com.zzh.cutemusic.domain.repository.ArtistsRepository
 import com.zzh.cutemusic.domain.repository.FoldersRepository
+import com.zzh.cutemusic.domain.repository.PlaybackStatsRepository
 import com.zzh.cutemusic.domain.repository.PlaylistsRepository
 import com.zzh.cutemusic.domain.repository.SafManager
 import com.zzh.cutemusic.presentation.screens.album.AlbumDetailsViewModel
@@ -23,6 +25,7 @@ import com.zzh.cutemusic.presentation.screens.playlists.PlaylistViewModel
 import com.zzh.cutemusic.presentation.screens.quickplay.QuickPlayViewModel
 import com.zzh.cutemusic.presentation.screens.settings.FoldersViewModel
 import com.zzh.cutemusic.presentation.screens.settings.SafViewModel
+import com.zzh.cutemusic.presentation.screens.stats.StatsViewModel
 import com.zzh.cutemusic.presentation.shared_components.MusicViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.singleOf
@@ -36,7 +39,7 @@ val appModule = module {
             klass = PlaylistDatabase::class.java,
             name = "playlist.db"
         )
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
             .dao
     }
@@ -50,6 +53,7 @@ val appModule = module {
     singleOf(::AlbumsRepository)
     singleOf(::ArtistsRepository)
     singleOf(::PlaylistsRepository)
+    singleOf(::PlaybackStatsRepository)
     singleOf(::UserPreferences)
     viewModelOf(::MusicViewModel)
     viewModelOf(::MetadataViewModel)
@@ -64,4 +68,5 @@ val appModule = module {
     viewModelOf(::FoldersViewModel)
     viewModelOf(::SafViewModel)
     viewModelOf(::LyricsViewModel)
+    viewModelOf(::StatsViewModel)
 }
