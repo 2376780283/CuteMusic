@@ -3,6 +3,7 @@
 package com.zzh.cutemusic.presentation.screens.album
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -181,7 +182,8 @@ fun SharedTransitionScope.AlbumsScreen(
                 query = textFieldState.text.toString()
             )
 
-            if (useGrid) {
+            Box(modifier = Modifier.animateContentSize()) {
+                if (useGrid) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(if (orderedAlbums.isEmpty() || state.albums.isEmpty()) 1 else maxOf(1, numberOfAlbumGrids)),
                     contentPadding = paddingValues,
@@ -277,6 +279,9 @@ fun SharedTransitionScope.AlbumsScreen(
                     }
                 }
             }
+            }
+
+
         }
     }
 

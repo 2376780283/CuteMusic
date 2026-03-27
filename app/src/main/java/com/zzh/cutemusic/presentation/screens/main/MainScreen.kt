@@ -16,6 +16,7 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -294,9 +295,12 @@ fun SharedTransitionScope.MainScreen(
                 }
             }
         ) { paddingValues ->
-            val filteredTracks = state.tracks.fastFilter { it.title.contains(textFieldState.text, true) }
+            val filteredTracks = remember(textFieldState.text, state.tracks) {
+                state.tracks.fastFilter { it.title.contains(textFieldState.text, true) }
+            }
 
-            if (useGrid) {
+            Box(modifier = Modifier.animateContentSize()) {
+                if (useGrid) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(if (filteredTracks.isEmpty() || state.tracks.isEmpty()) 1 else numberOfTrackGrids),
                     state = lazyState,
@@ -544,9 +548,19 @@ fun SharedTransitionScope.MainScreen(
                                             }
                                         
                                         
-                                        }
-
-data class Category(
+                                                                                }
+                                        
+                                        
+                                                    }
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        data class Category(
     val name: String,
     val tracks: List<CuteTrack>
 )
