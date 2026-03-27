@@ -18,8 +18,8 @@ android {
         applicationId = "com.zzh.cutemusic"
         minSdk = 29
         targetSdk = 36
-        versionCode = 20260307
-        versionName = "3.1.8"
+        versionCode = 20260327
+        versionName = "3.1.9"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
