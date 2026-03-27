@@ -17,6 +17,7 @@ sealed interface PlayerActions {
     data class SeekToMusicIndex(val index: Int) : PlayerActions
     data class SetSpeed(val speed: Float) : PlayerActions
     data class SetPitch(val pitch: Float) : PlayerActions
+    data class SetVolume(val volume: Int) : PlayerActions
 
     data class Play(
         val index: Int,

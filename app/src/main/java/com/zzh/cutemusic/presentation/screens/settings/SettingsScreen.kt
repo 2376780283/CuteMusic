@@ -147,6 +147,8 @@ fun SettingsScreen(
 
             entry<SettingsScreens.Playback> {
                 SettingsPlayback(
+                    musicState = musicState,
+                    onHandlePlayerActions = onHandlePlayerActions,
                     onNavigateUp = backStack::removeLastOrNull
                 )
             }

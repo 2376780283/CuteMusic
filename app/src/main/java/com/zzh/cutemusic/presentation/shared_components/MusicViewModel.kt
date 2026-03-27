@@ -22,6 +22,8 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
 import com.zzh.cutemusic.data.datastore.UserPreferences
+import com.zzh.cutemusic.data.datastore.getPlayerVolume
+import com.zzh.cutemusic.data.datastore.savePlayerVolume
 import com.zzh.cutemusic.data.models.CuteTrack
 import com.zzh.cutemusic.data.states.MusicState
 import com.zzh.cutemusic.domain.PlaybackService
@@ -249,11 +251,17 @@ class MusicViewModel(
         viewModelScope.launch {
 
             val savedMusicState = userPreferences.getSavedMusicState()
+            val savedVolume = getPlayerVolume(application.applicationContext)
 
             mediaController!!.changeRepeatMode(savedMusicState.repeatMode)
             mediaController!!.applyShuffle(savedMusicState.shuffle)
             mediaController!!.applyPlaybackSpeed(savedMusicState.speed)
             mediaController!!.applyPlaybackPitch(savedMusicState.pitch)
+            mediaController!!.volume = savedVolume / 100f
+
+            _musicState.update {
+                it.copy(volume = savedVolume)
+            }
 
             if (savedMusicState.loadedMedias.isNotEmpty()) {
                 mediaController!!.setMediaItems(
@@ -316,6 +324,16 @@ class MusicViewModel(
             is PlayerActions.ChangeRepeatMode -> mediaController!!.changeRepeatMode()
             is PlayerActions.SetSpeed -> mediaController!!.applyPlaybackSpeed(action.speed)
             is PlayerActions.SetPitch -> mediaController!!.applyPlaybackPitch(action.pitch)
+            is PlayerActions.SetVolume -> {
+                val volumeFloat = action.volume / 100f
+                mediaController!!.volume = volumeFloat
+                _musicState.update {
+                    it.copy(volume = action.volume)
+                }
+                viewModelScope.launch {
+                    savePlayerVolume(application.applicationContext, action.volume)
+                }
+            }
             is PlayerActions.Play -> {
                 val mediaItemsToPlay = action.tracks.fastMap { it.mediaItem }
 

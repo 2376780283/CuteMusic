@@ -23,6 +23,7 @@ import com.zzh.cutemusic.data.datastore.PreferencesKeys.NUMBER_OF_ALBUM_GRIDS
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.NUMBER_OF_TRACK_GRIDS
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.PAUSE_ON_MUTE
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.PLAYLIST_SORT
+import com.zzh.cutemusic.data.datastore.PreferencesKeys.PLAYER_VOLUME
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.SAF_TRACKS
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.SHOW_SHUFFLE_BUTTON
 import com.zzh.cutemusic.data.datastore.PreferencesKeys.SLIDER_STYLE
@@ -74,6 +75,7 @@ data object PreferencesKeys {
     val HAS_BEEN_THROUGH_SETUP = booleanPreferencesKey("HAS_BEEN_THROUGH_SETUP")
     val SORT_TRACKS_ASCENDING = booleanPreferencesKey("SORT_TRACKS_ASCENDING")
     val LAST_MUSIC_STATE = stringPreferencesKey("LAST_MUSIC_STATE")
+    val PLAYER_VOLUME = intPreferencesKey("PLAYER_VOLUME")
 }
 
 
@@ -181,6 +183,10 @@ fun rememberHasSeenTip() =
 fun rememberSortTracksAscending() =
     rememberPreference(key = SORT_TRACKS_ASCENDING, defaultValue = true)
 
+@Composable
+fun rememberPlayerVolume() =
+    rememberPreference(key = PLAYER_VOLUME, defaultValue = 100)
+
 suspend fun getPauseOnMute(context: Context) =
     getPreference(key = PAUSE_ON_MUTE, defaultValue = false, context = context)
 
@@ -193,6 +199,12 @@ suspend fun getMinTrackDuration(context: Context) =
 
 suspend fun getWhitelistedFolders(context: Context) =
     getPreference(key = WHITELISTED_FOLDERS, defaultValue = emptySet(), context = context)
+
+suspend fun getPlayerVolume(context: Context) =
+    getPreference(key = PLAYER_VOLUME, defaultValue = 100, context = context)
+
+suspend fun savePlayerVolume(context: Context, volume: Int) =
+    savePreference(key = PLAYER_VOLUME, value = volume, context = context)
 
 
 //suspend fun saveMediaIndexToMediaIdMap(pair: LastPlayed, context: Context) =

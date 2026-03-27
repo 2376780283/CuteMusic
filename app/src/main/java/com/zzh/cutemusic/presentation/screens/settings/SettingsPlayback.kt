@@ -16,17 +16,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.zzh.cutemusic.R
 import com.zzh.cutemusic.data.datastore.rememberPauseOnMute
+import com.zzh.cutemusic.data.datastore.rememberPlayerVolume
+import com.zzh.cutemusic.data.states.MusicState
+import com.zzh.cutemusic.domain.actions.PlayerActions
 import com.zzh.cutemusic.presentation.screens.settings.compenents.SettingsCards
 import com.zzh.cutemusic.presentation.screens.settings.compenents.SettingsWithTitle
+import com.zzh.cutemusic.presentation.screens.settings.compenents.SliderSettingsCards
 import com.zzh.cutemusic.presentation.shared_components.CuteNavigationButton
 
 @Composable
 fun SettingsPlayback(
+    musicState: MusicState,
+    onHandlePlayerActions: (PlayerActions) -> Unit,
     onNavigateUp: () -> Unit
 ) {
 
     val scrollState = rememberScrollState()
     var pauseOnMute by rememberPauseOnMute()
+    var playerVolume by rememberPlayerVolume()
 
 
     Scaffold(
@@ -42,10 +49,22 @@ fun SettingsPlayback(
             SettingsWithTitle(
                 title = R.string.audio
             ) {
+                SliderSettingsCards(
+                    value = playerVolume,
+                    topDp = 24.dp,
+                    bottomDp = 8.dp,
+                    text = R.string.player_volume,
+                    onValueChange = { volume ->
+                        playerVolume = volume
+                        onHandlePlayerActions(PlayerActions.SetVolume(volume))
+                    },
+                    optionalDescription = R.string.player_volume_desc,
+                    valueRange = 0f..100f
+                )
                 SettingsCards(
                     checked = pauseOnMute,
                     onCheckedChange = { pauseOnMute = !pauseOnMute },
-                    topDp = 24.dp,
+                    topDp = 8.dp,
                     bottomDp = 24.dp,
                     text = stringResource(R.string.pause_on_mute),
                     optionalDescription = R.string.pause_on_mute_desc
