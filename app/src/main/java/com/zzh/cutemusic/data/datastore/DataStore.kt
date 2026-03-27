@@ -9,33 +9,6 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.ALBUM_SORT
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.ARTIST_SORT
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.ARTWORK_SHAPE
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.ART_AS_BACKGROUND
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.CAROUSEL
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.GROUP_BY_FOLDERS
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.HAS_BEEN_THROUGH_SETUP
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.HAS_SEEN_TIP
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.HIDDEN_FOLDERS
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.MIN_TRACK_DURATION
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.NUMBER_OF_ALBUM_GRIDS
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.NUMBER_OF_TRACK_GRIDS
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.PAUSE_ON_MUTE
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.PLAYLIST_SORT
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.PLAYER_VOLUME
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.SAF_TRACKS
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.SHOW_SHUFFLE_BUTTON
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.SLIDER_STYLE
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.SNAP_SPEED_N_PITCH
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.SORT_TRACKS_ASCENDING
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.THEME
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.THUMBLESS_SLIDER
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.TRACK_SORT
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.USE_ART_THEME
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.USE_EXPRESSIVE_PALETTE
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.USE_SYSTEM_FONT
-import com.zzh.cutemusic.data.datastore.PreferencesKeys.WHITELISTED_FOLDERS
 import com.zzh.cutemusic.utils.ArtworkShape
 import com.zzh.cutemusic.utils.CuteTheme
 import com.zzh.cutemusic.utils.SliderStyle
@@ -44,7 +17,7 @@ private const val PREFERENCES_NAME = "settings"
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(PREFERENCES_NAME)
 
-data object PreferencesKeys {
+object PreferencesKeys {
     val THEME = stringPreferencesKey("theme")
     val USE_SYSTEM_FONT = booleanPreferencesKey("use_sys_font")
     val WHITELISTED_FOLDERS = stringSetPreferencesKey("WHITELISTED_FOLDERS")
@@ -76,135 +49,160 @@ data object PreferencesKeys {
     val SORT_TRACKS_ASCENDING = booleanPreferencesKey("SORT_TRACKS_ASCENDING")
     val LAST_MUSIC_STATE = stringPreferencesKey("LAST_MUSIC_STATE")
     val PLAYER_VOLUME = intPreferencesKey("PLAYER_VOLUME")
+    val MAIN_SCREEN_USE_GRID = booleanPreferencesKey("MAIN_SCREEN_USE_GRID")
+    val ALBUMS_USE_GRID = booleanPreferencesKey("ALBUMS_USE_GRID")
+    val PLAYLISTS_USE_GRID = booleanPreferencesKey("PLAYLISTS_USE_GRID")
+    val ARTIST_USE_GRID = booleanPreferencesKey("ARTIST_USE_GRID")
+    val LIST_ITEM_SIZE = intPreferencesKey("LIST_ITEM_SIZE")
 }
 
 
 @Composable
 fun rememberAppTheme() =
-    rememberPreference(key = THEME, defaultValue = CuteTheme.SYSTEM)
+    rememberPreference(key = PreferencesKeys.THEME, defaultValue = CuteTheme.SYSTEM)
 
 @Composable
 fun rememberUseSystemFont() =
-    rememberPreference(key = USE_SYSTEM_FONT, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.USE_SYSTEM_FONT, defaultValue = false)
 
 @Composable
 fun rememberSnapSpeedAndPitch() =
-    rememberPreference(key = SNAP_SPEED_N_PITCH, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.SNAP_SPEED_N_PITCH, defaultValue = false)
 
 @Composable
 fun rememberUseArtTheme() =
-    rememberPreference(key = USE_ART_THEME, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.USE_ART_THEME, defaultValue = false)
 
 @Composable
 fun rememberShowShuffleButton() =
-    rememberPreference(key = SHOW_SHUFFLE_BUTTON, defaultValue = true)
+    rememberPreference(key = PreferencesKeys.SHOW_SHUFFLE_BUTTON, defaultValue = true)
 
 @Composable
 fun rememberAllSafTracks() =
-    rememberPreference(key = SAF_TRACKS, defaultValue = emptySet())
+    rememberPreference(key = PreferencesKeys.SAF_TRACKS, defaultValue = emptySet())
 
 @Composable
 fun rememberGroupByFolders() =
-    rememberPreference(key = GROUP_BY_FOLDERS, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.GROUP_BY_FOLDERS, defaultValue = false)
 
 @Composable
 fun rememberCarousel() =
-    rememberPreference(key = CAROUSEL, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.CAROUSEL, defaultValue = false)
 
 @Composable
 fun rememberAlbumGrids() =
-    rememberPreference(key = NUMBER_OF_ALBUM_GRIDS, defaultValue = 2)
+    rememberPreference(key = PreferencesKeys.NUMBER_OF_ALBUM_GRIDS, defaultValue = 2)
     
 @Composable
 fun rememberTrackGrids() =
-    rememberPreference(key = NUMBER_OF_TRACK_GRIDS, defaultValue = 2)
+    rememberPreference(key = PreferencesKeys.NUMBER_OF_TRACK_GRIDS, defaultValue = 2)
 
 @Composable
 fun rememberArtworkShape() =
-    rememberPreference(key = ARTWORK_SHAPE, defaultValue = ArtworkShape.CLASSIC)
+    rememberPreference(key = PreferencesKeys.ARTWORK_SHAPE, defaultValue = ArtworkShape.CLASSIC)
 
 @Composable
 fun rememberSliderStyle() =
-    rememberPreference(key = SLIDER_STYLE, defaultValue = SliderStyle.WAVY)
+    rememberPreference(key = PreferencesKeys.SLIDER_STYLE, defaultValue = SliderStyle.WAVY)
 
 @Composable
 fun rememberThumblessSlider() =
-    rememberPreference(key = THUMBLESS_SLIDER, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.THUMBLESS_SLIDER, defaultValue = false)
 
 @Composable
 fun rememberHiddenFolders() =
-    rememberPreference(key = HIDDEN_FOLDERS, defaultValue = emptySet())
+    rememberPreference(key = PreferencesKeys.HIDDEN_FOLDERS, defaultValue = emptySet())
 
 @Composable
 fun rememberUseArtAsBackground() =
-    rememberPreference(key = ART_AS_BACKGROUND, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.ART_AS_BACKGROUND, defaultValue = false)
 
 @Composable
 fun rememberAlbumSort() =
-    rememberPreference(key = ALBUM_SORT, defaultValue = 0)
+    rememberPreference(key = PreferencesKeys.ALBUM_SORT, defaultValue = 0)
 
 @Composable
 fun rememberTrackSort() =
-    rememberPreference(key = TRACK_SORT, defaultValue = 0)
+    rememberPreference(key = PreferencesKeys.TRACK_SORT, defaultValue = 0)
 
 @Composable
 fun rememberPlaylistSort() =
-    rememberPreference(key = PLAYLIST_SORT, defaultValue = 0)
+    rememberPreference(key = PreferencesKeys.PLAYLIST_SORT, defaultValue = 0)
 
 @Composable
 fun rememberArtistSort() =
-    rememberPreference(key = ARTIST_SORT, defaultValue = 0)
+    rememberPreference(key = PreferencesKeys.ARTIST_SORT, defaultValue = 0)
 
 @Composable
 fun rememberPauseOnMute() =
-    rememberPreference(key = PAUSE_ON_MUTE, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.PAUSE_ON_MUTE, defaultValue = false)
 
 @Composable
 fun rememberUseExpressivePalette() =
-    rememberPreference(key = USE_EXPRESSIVE_PALETTE, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.USE_EXPRESSIVE_PALETTE, defaultValue = false)
 
 @Composable
 fun rememberMinTrackDuration() =
-    rememberPreference(key = MIN_TRACK_DURATION, defaultValue = 0)
+    rememberPreference(key = PreferencesKeys.MIN_TRACK_DURATION, defaultValue = 0)
 
 @Composable
 fun rememberWhitelistedFolders() =
-    rememberPreference(key = WHITELISTED_FOLDERS, defaultValue = emptySet())
+    rememberPreference(key = PreferencesKeys.WHITELISTED_FOLDERS, defaultValue = emptySet())
 
 @Composable
 fun rememberHasBeenThroughSetup() =
-    rememberPreference(key = HAS_BEEN_THROUGH_SETUP, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.HAS_BEEN_THROUGH_SETUP, defaultValue = false)
 
 @Composable
 fun rememberHasSeenTip() =
-    rememberPreference(key = HAS_SEEN_TIP, defaultValue = false)
+    rememberPreference(key = PreferencesKeys.HAS_SEEN_TIP, defaultValue = false)
 
 @Composable
 fun rememberSortTracksAscending() =
-    rememberPreference(key = SORT_TRACKS_ASCENDING, defaultValue = true)
+    rememberPreference(key = PreferencesKeys.SORT_TRACKS_ASCENDING, defaultValue = true)
 
 @Composable
 fun rememberPlayerVolume() =
-    rememberPreference(key = PLAYER_VOLUME, defaultValue = 100)
+    rememberPreference(key = PreferencesKeys.PLAYER_VOLUME, defaultValue = 100)
+
+@Composable
+fun rememberMainScreenUseGrid() =
+    rememberPreference(key = PreferencesKeys.MAIN_SCREEN_USE_GRID, defaultValue = true)
+
+@Composable
+fun rememberAlbumsUseGrid() =
+    rememberPreference(key = PreferencesKeys.ALBUMS_USE_GRID, defaultValue = true)
+
+@Composable
+fun rememberPlaylistsUseGrid() =
+    rememberPreference(key = PreferencesKeys.PLAYLISTS_USE_GRID, defaultValue = false)
+
+@Composable
+fun rememberArtistUseGrid() =
+    rememberPreference(key = PreferencesKeys.ARTIST_USE_GRID, defaultValue = false)
+
+@Composable
+fun rememberListItemSize() =
+    rememberPreference(key = PreferencesKeys.LIST_ITEM_SIZE, defaultValue = 60)
 
 suspend fun getPauseOnMute(context: Context) =
-    getPreference(key = PAUSE_ON_MUTE, defaultValue = false, context = context)
+    getPreference(key = PreferencesKeys.PAUSE_ON_MUTE, defaultValue = false, context = context)
 
 fun getSafTracks(context: Context) =
-    getPreferenceFlow(key = SAF_TRACKS, defaultValue = emptySet(), context = context)
+    getPreferenceFlow(key = PreferencesKeys.SAF_TRACKS, defaultValue = emptySet(), context = context)
 
 
 suspend fun getMinTrackDuration(context: Context) =
-    getPreference(key = MIN_TRACK_DURATION, defaultValue = 0, context = context)
+    getPreference(key = PreferencesKeys.MIN_TRACK_DURATION, defaultValue = 0, context = context)
 
 suspend fun getWhitelistedFolders(context: Context) =
-    getPreference(key = WHITELISTED_FOLDERS, defaultValue = emptySet(), context = context)
+    getPreference(key = PreferencesKeys.WHITELISTED_FOLDERS, defaultValue = emptySet(), context = context)
 
 suspend fun getPlayerVolume(context: Context) =
-    getPreference(key = PLAYER_VOLUME, defaultValue = 100, context = context)
+    getPreference(key = PreferencesKeys.PLAYER_VOLUME, defaultValue = 100, context = context)
 
 suspend fun savePlayerVolume(context: Context, volume: Int) =
-    savePreference(key = PLAYER_VOLUME, value = volume, context = context)
+    savePreference(key = PreferencesKeys.PLAYER_VOLUME, value = volume, context = context)
 
 
 //suspend fun saveMediaIndexToMediaIdMap(pair: LastPlayed, context: Context) =

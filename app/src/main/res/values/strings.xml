@@ -204,4 +204,7 @@
 <string name="top_played_desc">Check your most played tracks</string>
 
 <string name="play_stats_format">Played %1$d times • Total time: %2$s</string>
+<string name="cover_size">Cover size</string>
+<string name="switch_to_list">Switch to list</string>
+<string name="switch_to_grid">Switch to grid</string>
 </resources>

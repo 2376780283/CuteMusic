@@ -20,11 +20,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
@@ -57,6 +60,8 @@ import androidx.navigation3.ui.LocalNavAnimatedContentScope
 import com.zzh.cutemusic.R
 import com.zzh.cutemusic.data.datastore.rememberGroupByFolders
 import com.zzh.cutemusic.data.datastore.rememberHiddenFolders
+import com.zzh.cutemusic.data.datastore.rememberListItemSize
+import com.zzh.cutemusic.data.datastore.rememberMainScreenUseGrid
 import com.zzh.cutemusic.data.datastore.rememberSortTracksAscending
 import com.zzh.cutemusic.data.datastore.rememberTrackGrids
 import com.zzh.cutemusic.data.datastore.rememberTrackSort
@@ -70,6 +75,7 @@ import com.zzh.cutemusic.presentation.screens.main.components.TrackCard
 import com.zzh.cutemusic.presentation.screens.playlists.components.PlaylistPicker
 import com.zzh.cutemusic.presentation.shared_components.CuteActionButton
 import com.zzh.cutemusic.presentation.shared_components.CuteSearchbar
+import com.zzh.cutemusic.presentation.shared_components.MusicListItem
 import com.zzh.cutemusic.presentation.shared_components.NoResult
 import com.zzh.cutemusic.presentation.shared_components.NoXFound
 import com.zzh.cutemusic.presentation.shared_components.SelectedBar
@@ -96,7 +102,10 @@ fun SharedTransitionScope.MainScreen(
     val multiSelectState = rememberMultiSelectState<CuteTrack>()
     val textFieldState = rememberTextFieldState()
     var numberOfTrackGrids by rememberTrackGrids()
+    var useGrid by rememberMainScreenUseGrid()
+    var listItemSize by rememberListItemSize()
     val lazyState = rememberLazyGridState()
+    val listState = rememberLazyListState()
 
 
     if (state.isLoading) {
@@ -187,12 +196,35 @@ fun SharedTransitionScope.MainScreen(
                                     topContent = {
                                         DropdownMenuItem(
                                             onClick = {
-                                                numberOfTrackGrids =
-                                                    if (numberOfTrackGrids == 4) 2 else numberOfTrackGrids + 1
+                                                useGrid = !useGrid
                                             },
-                                            text = { Text(stringResource(R.string.no_of_grids)) },
-                                            trailingIcon = { Text("$numberOfTrackGrids") }
+                                            text = { Text(stringResource(if (useGrid) R.string.switch_to_list else R.string.switch_to_grid)) },
+                                            trailingIcon = {
+                                                Icon(
+                                                    painter = painterResource(if (useGrid) R.drawable.list_view else R.drawable.grid_view),
+                                                    contentDescription = null
+                                                )
+                                            }
                                         )
+                                        if (!useGrid) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    listItemSize = if (listItemSize >= 80) 40 else listItemSize + 10
+                                                },
+                                                text = { Text(stringResource(R.string.cover_size)) },
+                                                trailingIcon = { Text("$listItemSize") }
+                                            )
+                                        }
+                                        if (useGrid) {
+                                            DropdownMenuItem(
+                                                onClick = {
+                                                    numberOfTrackGrids =
+                                                        if (numberOfTrackGrids == 4) 2 else numberOfTrackGrids + 1
+                                                },
+                                                text = { Text(stringResource(R.string.no_of_grids)) },
+                                                trailingIcon = { Text("$numberOfTrackGrids") }
+                                            )
+                                        }
                                         DropdownMenuItem(
                                             selected = groupByFolders,
                                             onClick = { groupByFolders = !groupByFolders },
@@ -264,133 +296,255 @@ fun SharedTransitionScope.MainScreen(
         ) { paddingValues ->
             val filteredTracks = state.tracks.fastFilter { it.title.contains(textFieldState.text, true) }
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(if (filteredTracks.isEmpty() || state.tracks.isEmpty()) 1 else numberOfTrackGrids),
-                state = lazyState,
-                contentPadding = paddingValues
-            ) {
-                if (groupByFolders) {
-                    val categories = filteredTracks
-                        .groupBy { it.folder }
-                        .toSortedMap()
-                        .map {
-                            Category(
-                                name = it.key,
-                                tracks = it.value
-                            )
-                        }
-
-
-                    categories.fastForEach { category ->
-                        item(span = { GridItemSpan(maxLineSpan) }) {
-                            FolderHeader(
-                                category = category,
-                                isHidden = category.name in hiddenFolders,
-                                onToggleVisibility = {
-                                    hiddenFolders =
-                                        hiddenFolders.copyMutate { addOrRemove(category.name) }
-                                },
-                                onHandlePlayerAction = onHandlePlayerAction
-                            )
-                        }
-                        if (category.name !in hiddenFolders) {
-                            items(
-                                items = category.tracks,
-                                key = { it.mediaId }
-                            ) { music ->
-
-                                val isSelected by remember {
-                                    derivedStateOf { multiSelectState.isSelected(music) }
-                                }
-
-                                TrackCard(
-                                    modifier = Modifier.animateItem(),
-                                    music = music,
-                                    musicState = musicState,
-                                    onShortClick = {
-                                        if (multiSelectState.isInSelectionMode) {
-                                            multiSelectState.toggle(music)
-                                        } else {
-                                            onHandlePlayerAction(
-                                                PlayerActions.Play(
-                                                    index = state.tracks.indexOf(music),
-                                                    tracks = state.tracks
-                                                )
-                                            )
-                                        }
-                                    },
-                                    onLongClick = { multiSelectState.toggle(music) },
-                                    isSelected = isSelected,
-                                    onNavigate = onNavigate,
-                                    onHandlePlayerActions = onHandlePlayerAction
+            if (useGrid) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(if (filteredTracks.isEmpty() || state.tracks.isEmpty()) 1 else numberOfTrackGrids),
+                    state = lazyState,
+                    contentPadding = paddingValues
+                ) {
+                    if (groupByFolders) {
+                        val categories = filteredTracks
+                            .groupBy { it.folder }
+                            .toSortedMap()
+                            .map {
+                                Category(
+                                    name = it.key,
+                                    tracks = it.value
                                 )
                             }
-                        }
-                    }
-                } else {
-                    if (state.tracks.isEmpty()) {
-                        item(span = { GridItemSpan(maxLineSpan) }) {
-                            NoXFound(
-                                headlineText = R.string.no_music_title,
-                                bodyText = R.string.no_music_desc,
-                                icon = R.drawable.music_note_rounded
-                            )
-                            Text(
-                                text = stringResource(R.string.no_music_tip),
-                                style = MaterialTheme.typography.bodySmallEmphasized.copy(
-                                    textAlign = TextAlign.Center,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 15.dp)
-                                    .selfAlignHorizontally()
-                            )
+
+
+                        categories.fastForEach { category ->
+                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                FolderHeader(
+                                    category = category,
+                                    isHidden = category.name in hiddenFolders,
+                                    onToggleVisibility = {
+                                        hiddenFolders =
+                                            hiddenFolders.copyMutate { addOrRemove(category.name) }
+                                    },
+                                    onHandlePlayerAction = onHandlePlayerAction
+                                )
+                            }
+                            if (category.name !in hiddenFolders) {
+                                items(
+                                    items = category.tracks,
+                                    key = { it.mediaId }
+                                ) { music ->
+
+                                    val isSelected by remember {
+                                        derivedStateOf { multiSelectState.isSelected(music) }
+                                    }
+
+                                    TrackCard(
+                                        modifier = Modifier.animateItem(),
+                                        music = music,
+                                        musicState = musicState,
+                                        onShortClick = {
+                                            if (multiSelectState.isInSelectionMode) {
+                                                multiSelectState.toggle(music)
+                                            } else {
+                                                onHandlePlayerAction(
+                                                    PlayerActions.Play(
+                                                        index = state.tracks.indexOf(music),
+                                                        tracks = state.tracks
+                                                    )
+                                                )
+                                            }
+                                        },
+                                        onLongClick = { multiSelectState.toggle(music) },
+                                        isSelected = isSelected,
+                                        onNavigate = onNavigate,
+                                        onHandlePlayerActions = onHandlePlayerAction
+                                    )
+                                }
+                            }
                         }
                     } else {
-
-                        if (filteredTracks.isEmpty()) {
-                            item(span = { GridItemSpan(maxLineSpan) }) { NoResult() }
-                        } else {
-                            items(
-                                items = filteredTracks,
-                                key = { it.mediaId }
-                            ) { music ->
-
-                                val isSelected by remember {
-                                    derivedStateOf { multiSelectState.isSelected(music) }
-                                }
-
-                                TrackCard(
-                                    modifier = Modifier.animateItem(),
-                                    music = music,
-                                    musicState = musicState,
-                                    onShortClick = {
-                                        if (multiSelectState.isInSelectionMode) {
-                                            multiSelectState.toggle(music)
-                                        } else {
-                                            onHandlePlayerAction(
-                                                PlayerActions.Play(
-                                                    index = state.tracks.indexOf(music),
-                                                    tracks = state.tracks
-                                                )
-                                            )
-                                        }
-                                    },
-                                    onLongClick = { multiSelectState.toggle(music) },
-                                    isSelected = isSelected,
-                                    onNavigate = onNavigate,
-                                    onHandlePlayerActions = onHandlePlayerAction
+                        if (state.tracks.isEmpty()) {
+                            item(span = { GridItemSpan(maxLineSpan) }) {
+                                NoXFound(
+                                    headlineText = R.string.no_music_title,
+                                    bodyText = R.string.no_music_desc,
+                                    icon = R.drawable.music_note_rounded
+                                )
+                                Text(
+                                    text = stringResource(R.string.no_music_tip),
+                                    style = MaterialTheme.typography.bodySmallEmphasized.copy(
+                                        textAlign = TextAlign.Center,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    ),
+                                    modifier = Modifier
+                                        .padding(top = 15.dp)
+                                        .selfAlignHorizontally()
                                 )
                             }
-                        }
+                        } else {
 
+                            if (filteredTracks.isEmpty()) {
+                                item(span = { GridItemSpan(maxLineSpan) }) { NoResult() }
+                            } else {
+                                items(
+                                    items = filteredTracks,
+                                    key = { it.mediaId }
+                                ) { music ->
+
+                                    val isSelected by remember {
+                                        derivedStateOf { multiSelectState.isSelected(music) }
+                                    }
+
+                                    TrackCard(
+                                        modifier = Modifier.animateItem(),
+                                        music = music,
+                                        musicState = musicState,
+                                        onShortClick = {
+                                            if (multiSelectState.isInSelectionMode) {
+                                                multiSelectState.toggle(music)
+                                            } else {
+                                                onHandlePlayerAction(
+                                                    PlayerActions.Play(
+                                                        index = state.tracks.indexOf(music),
+                                                        tracks = state.tracks
+                                                    )
+                                                )
+                                            }
+                                        },
+                                        onLongClick = { multiSelectState.toggle(music) },
+                                        isSelected = isSelected,
+                                        onNavigate = onNavigate,
+                                        onHandlePlayerActions = onHandlePlayerAction
+                                    )
+                                }
+                            }
+
+                        }
                     }
                 }
-            }
-        }
-    }
+            } else {
+                LazyColumn(
+                    state = listState,
+                    contentPadding = paddingValues,
+                    modifier = Modifier.padding(horizontal = 5.dp)
+                ) {
+                    if (groupByFolders) {
+                        val categories = filteredTracks
+                            .groupBy { it.folder }
+                            .toSortedMap()
+                            .map {
+                                Category(
+                                    name = it.key,
+                                    tracks = it.value
+                                )
+                            }
 
-}
+                        categories.fastForEach { category ->
+                            item(key = "Header_${category.name}") {
+                                FolderHeader(
+                                    category = category,
+                                    isHidden = category.name in hiddenFolders,
+                                    onToggleVisibility = {
+                                        hiddenFolders =
+                                            hiddenFolders.copyMutate { addOrRemove(category.name) }
+                                    },
+                                    onHandlePlayerAction = onHandlePlayerAction
+                                )
+                            }
+                            if (category.name !in hiddenFolders) {
+                                items(
+                                    items = category.tracks,
+                                    key = { it.mediaId }
+                                ) { music ->
+                                    val isSelected by remember {
+                                        derivedStateOf { multiSelectState.isSelected(music) }
+                                    }
+                                    MusicListItem(
+                                        modifier = Modifier.animateItem(),
+                                        music = music,
+                                        musicState = musicState,
+                                        onShortClick = {
+                                            if (multiSelectState.isInSelectionMode) {
+                                                multiSelectState.toggle(music)
+                                            } else {
+                                                onHandlePlayerAction(
+                                                    PlayerActions.Play(
+                                                        index = state.tracks.indexOf(music),
+                                                        tracks = state.tracks
+                                                    )
+                                                )
+                                            }
+                                        },
+                                        onLongClick = { multiSelectState.toggle(music) },
+                                        isSelected = isSelected,
+                                        onNavigate = onNavigate,
+                                        onHandlePlayerActions = onHandlePlayerAction,
+                                        coverSize = listItemSize
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        if (state.tracks.isEmpty()) {
+                            item(key = "Empty") {
+                                NoXFound(
+                                    headlineText = R.string.no_music_title,
+                                    bodyText = R.string.no_music_desc,
+                                    icon = R.drawable.music_note_rounded
+                                )
+                                Text(
+                                    text = stringResource(R.string.no_music_tip),
+                                    style = MaterialTheme.typography.bodySmallEmphasized.copy(
+                                        textAlign = TextAlign.Center,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    ),
+                                    modifier = Modifier
+                                        .padding(top = 15.dp)
+                                        .selfAlignHorizontally()
+                                )
+                            }
+                        } else {
+                            if (filteredTracks.isEmpty()) {
+                                item(key = "NoResult") { NoResult() }
+                            } else {
+                                items(
+                                    items = filteredTracks,
+                                    key = { it.mediaId }
+                                ) { music ->
+                                    val isSelected by remember {
+                                        derivedStateOf { multiSelectState.isSelected(music) }
+                                    }
+                                    MusicListItem(
+                                        modifier = Modifier.animateItem(),
+                                        music = music,
+                                        musicState = musicState,
+                                        onShortClick = {
+                                            if (multiSelectState.isInSelectionMode) {
+                                                multiSelectState.toggle(music)
+                                            } else {
+                                                onHandlePlayerAction(
+                                                    PlayerActions.Play(
+                                                        index = state.tracks.indexOf(music),
+                                                        tracks = state.tracks
+                                                    )
+                                                )
+                                            }
+                                        },
+                                                                                onLongClick = { multiSelectState.toggle(music) },
+                                                                                isSelected = isSelected,
+                                                                                onNavigate = onNavigate,
+                                                                                onHandlePlayerActions = onHandlePlayerAction,
+                                                                                coverSize = listItemSize
+                                                                            )
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        
+                                        
+                                        }
 
 data class Category(
     val name: String,

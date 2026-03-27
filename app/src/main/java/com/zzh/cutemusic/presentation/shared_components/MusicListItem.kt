@@ -84,7 +84,8 @@ fun MusicListItem(
     onNavigate: (Screen) -> Unit,
     onHandlePlayerActions: (PlayerActions) -> Unit,
     isSelected: Boolean = false,
-    extraOptions: List<MoreOptions> = emptyList()
+    extraOptions: List<MoreOptions> = emptyList(),
+    coverSize: Int = 50
 ) {
 
     val context = LocalContext.current
@@ -132,7 +133,7 @@ fun MusicListItem(
                         is AsyncImagePainter.State.Error -> {
                             Box(
                                 modifier = Modifier
-                                    .size(50.dp)
+                                    .size(coverSize.dp)
                                     .clip(RoundedCornerShape(10.dp))
                                     .background(MaterialTheme.colorScheme.surfaceContainer),
                                 contentAlignment = Alignment.Center
@@ -151,7 +152,7 @@ fun MusicListItem(
                                 model = ImageUtils.imageRequester(music.artUri, context),
                                 contentDescription = stringResource(R.string.artwork),
                                 modifier = Modifier
-                                    .size(50.dp)
+                                    .size(coverSize.dp)
                                     .clip(RoundedCornerShape(10.dp)),
                                 contentScale = ContentScale.Crop
                             )
