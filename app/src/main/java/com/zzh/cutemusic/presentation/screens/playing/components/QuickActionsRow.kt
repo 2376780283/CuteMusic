@@ -27,6 +27,7 @@ import com.zzh.cutemusic.domain.actions.PlayerActions
 import com.zzh.cutemusic.presentation.navigation.Screen
 import com.zzh.cutemusic.presentation.screens.playlists.components.PlaylistPicker
 import com.zzh.cutemusic.presentation.shared_components.MusicDetailsDialog
+import com.zzh.cutemusic.presentation.shared_components.VolumeDialog
 import com.zzh.cutemusic.utils.rememberInteractionSource
 import com.zzh.cutemusic.utils.selfAlignHorizontally
 
@@ -41,7 +42,8 @@ fun QuickActionsRow(
     var showDetailsDialog by remember { mutableStateOf(false) }
     var showTimePicker by remember { mutableStateOf(false) }
     var showPlaylistDialog by remember { mutableStateOf(false) }
-    val interactionSources = List(6) { rememberInteractionSource() }
+    var showVolumeDialog by remember { mutableStateOf(false) }
+    val interactionSources = List(7) { rememberInteractionSource() }
 
 
 
@@ -67,6 +69,14 @@ fun QuickActionsRow(
         PlaylistPicker(
             mediaId = listOf(musicState.track.mediaId),
             onDismissRequest = { showPlaylistDialog = false }
+        )
+    }
+
+    if (showVolumeDialog) {
+        VolumeDialog(
+            volume = musicState.volume,
+            onDismissRequest = { showVolumeDialog = false },
+            onHandlePlayerAction = onHandlePlayerActions
         )
     }
 
@@ -160,6 +170,17 @@ fun QuickActionsRow(
                         R.drawable.sleep_timer_filled
                     }
                 ),
+                contentDescription = null
+            )
+        }
+        IconButton(
+            onClick = { showVolumeDialog = true },
+            interactionSource = interactionSources[6],
+            modifier = Modifier
+                .animateWidth(interactionSources[6])
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.volume),
                 contentDescription = null
             )
         }
