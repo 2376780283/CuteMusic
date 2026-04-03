@@ -207,4 +207,9 @@
 <string name="cover_size">Cover size</string>
 <string name="switch_to_list">Switch to list</string>
 <string name="switch_to_grid">Switch to grid</string>
+<string name="crash_title">Oops! Something went wrong</string>
+<string name="crash_subtitle">The app has encountered an unexpected error. Please copy the crash log and report it to the developer.</string>
+<string name="crash_copy_log">Copy Log</string>
+<string name="crash_restart">Restart App</string>
+<string name="crash_log_copied">Crash log copied to clipboard</string>
 </resources>
